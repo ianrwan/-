@@ -9,19 +9,17 @@ namespace Megumin.FileSystem
 {
     // 要進行 file 讀取存取的 class
     // 讀取的資料會將資料格式轉變為 string or list 傳回
-    public class DatabaseSystem
+    public class FileIO
     {
         private string path;
-        private List<string> dataStore;
 
-        public DatabaseSystem(string path)
+        public FileIO(string path)
         {
             this.path = path;
-            dataStore = new List<string>();
         }
 
         // 若沒有傳入 path，path 會是空值，需要自己設定，否則會報錯
-        public DatabaseSystem() : this(""){}
+        public FileIO() : this(""){}
 
         // 可以重新設定所要使用的 path
         // input parameter: path = the path where to read to (absolute directory only, for instance: C:\...\storage\data.txt)
@@ -43,26 +41,26 @@ namespace Megumin.FileSystem
         public List<string> ReadFileToList(string path)
         {
             string line = null;
+            List<string> dataStore = new List<string>();
 
             try
             {
                 if(path == "" || path == null)
-                    throw new Exception(ExceptionHandleWord.exceptionWordFileWrong);
+                    throw new Exception(ExceptionHandleWord.exceptionWordFilePath);
+
+                this.path = path;
 
                 using(StreamReader sr = new StreamReader(path))
                 {
-                    line = sr.ReadLine();
-
-                    while(line != null)
+                    while((line = sr.ReadLine()) != null)
                     {
                         dataStore.Add(line);
-                        line = sr.ReadLine();
                     }
                 }
             }
             catch(Exception e)
             {
-                Debug.LogWarning(ExceptionHandleWord.exceptionWordFileWrong);
+                Debug.LogWarning(ExceptionHandleWord.exceptionWordReadWrong);
                 Debug.LogWarning(e);
             }
 
@@ -90,20 +88,22 @@ namespace Megumin.FileSystem
             try
             {
                 if(path == "" || path == null)
-                    throw new Exception();
+                    throw new Exception(ExceptionHandleWord.exceptionWordFilePath);
+                
+                this.path = path;
 
                 using(StreamReader sr = new StreamReader(path))
                 {
                     string temp = "";
                     while((temp = sr.ReadLine()) != null)
                     {
-                        line += temp;
+                        line += temp+'\n';
                     }
                 }
             }
             catch(Exception e)
             {
-                Debug.LogWarning(ExceptionHandleWord.exceptionWordFileWrong);
+                Debug.LogWarning(ExceptionHandleWord.exceptionWordReadWrong);
                 Debug.LogWarning(e);
             }
 
@@ -116,34 +116,38 @@ namespace Megumin.FileSystem
         }
 
         // WriteStringToFile_Cover 將資料寫入 file 並且覆蓋
-        // input parameter: path = the path where to write to (absolute directory only, for instance: C:\...\storage\data.txt)
-        public void WriteStringToFile_Cover(string path)
+        // input parameter: 
+        // path = the path where to write to (absolute directory only, for instance: C:\...\storage\data.txt)
+        // data = the data what you wanna write into file (data should be organized to string and newline)   
+        public void WriteStringToFile_Cover(string path, string data)
         {
             try
             {
                 if(path == "" || path == null)
                     throw new Exception(ExceptionHandleWord.exceptionWordFilePath);
 
+                this.path = path;
+
                 using(StreamWriter sw = new StreamWriter(path))
                 {
-                    sw.WriteLine();
+                    sw.WriteLine(data);
                 }
             }
             catch(Exception e)
             {
-                Debug.LogWarning(ExceptionHandleWord.exceptionWordFileWrong);
+                Debug.LogWarning(ExceptionHandleWord.exceptionWordWriteWrong);
                 Debug.LogWarning(e);
             }
         }
 
-        public void WriteStringToFile_Cover()
+        public void WriteStringToFile_Cover(string data)
         {
-            WriteStringToFile_Cover(this.path);
+            WriteStringToFile_Cover(this.path, data);
         }
 
-        public List<string> DeserializeJSON()
-        {
-            return dataStore;
-        }
+        // public List<string> DeserializeJSON()
+        // {
+        //     return dataStore;
+        // }
     }
 }

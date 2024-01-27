@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Megumin.FileSystem;
 
-public class FileIO : MonoBehaviour
+public class JsonTest : MonoBehaviour
 {
     public Text showText;
 
@@ -104,7 +104,7 @@ public class FileIO : MonoBehaviour
         List<string> tempList;
         string tempJson = "";
         string writePath = path+"/Storage/test/player.json";
-        DatabaseSystem ds = new DatabaseSystem(writePath);
+        FileIO ds = new FileIO(writePath);
 
         try
         {
