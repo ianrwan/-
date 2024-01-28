@@ -3,10 +3,12 @@ using Newtonsoft.Json;
 using System;
 
 using Megumin.MeguminException;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 namespace Megumin.FileSystem
 {
-    public class JsonConverter : MonoBehaviour
+    public class JsonConverter
     {
         FileIO fileIO;
         public JsonConverter() : this(""){}
@@ -48,7 +50,7 @@ namespace Megumin.FileSystem
         {
             string tempJson;
             tempJson = JsonSerealize<T>(obj);
-            JsonSaveToFIle(path, tempJson);
+            JsonSaveToFIle(tempJson, path);
         }
 
         // 將 json: string 存入指定的 file
@@ -89,5 +91,32 @@ namespace Megumin.FileSystem
             var obj = JsonDeSerealize<T>(json);
             return obj;
         }
+
+        public JObject JsonParse(string path)
+        {
+            string json = fileIO.ReadFileToString(path);
+            JObject jsonObj = JObject.Parse(json);
+            return jsonObj;
+        }
+
+        public List<T> FileToJsonArray1D<T>(string path, string arrayName)
+        {
+            var jsonObj = JsonParse(path);
+            List<T> list = new List<T>();
+
+            foreach(var data in jsonObj[arrayName])
+            {
+                var temp = JsonDeSerealize<T>(data.ToString());
+                list.Add(temp);
+            }
+
+            return list;
+        }
+
+        public List<T> FileToJsonArray1D<T>(string path)
+        {
+            return FileToJsonArray1D<T>(path, "data");
+        }
     }
 }
+

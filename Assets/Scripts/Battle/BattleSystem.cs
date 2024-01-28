@@ -1,197 +1,134 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
-public enum Status{SKILL_CHOOSE, ENEMY_CHOOSE, ARITHMETIC}
+using Megumin.FileSystem;
+using Megumin.GameSystem;
+using Megumin.Battle;
+
 public class BattleSystem : MonoBehaviour
 {
-    private Status currentStatus;
-    private List<Status> previousStatus;
-    private Status nextStatus;
+    private JsonConverter jc;
+    private List<Megumin.GameSystem.Button> buttons;
+    private List<MainCharacter> characters;
+    private List<Enemy> enemies;
+    private Party party;
+    private PartyEnemy partyEnemy;
 
-    private bool isArithmetic = false;
+    private CombatStatus combatStatus;
+    private ChoiceStatus choiceStatus;
 
-    [SerializeField]
-    private GameObject playerObject;
-    private PlayerBattleController playerController;
+    private IBattleScreen battleScreen;
+    private List<GameObject> buttonsObj;
 
-    public List<GameObject> charactersData; // only for character gameObject
-    public HandleData handleData;
+    private UserInput userInput;
+    private int userInputNum;
 
-    public GameObject stickObject;
-    public Vector3 stickArrowPos;
-
-    private void Awake()
+    public void Start()
     {
-        playerController = playerObject.GetComponent<PlayerBattleController>();
+        SetUpList();
+        SetUpParty();
+        SetUpStatus();
+        SetUpEnemy();
+        SetUpScreen();
+        SetUpUserInput();
     }
 
-    private void Start()
+    public void Update()
     {
-        // stickObject.SetActive(false);
-        var x = stickObject.transform.GetChild(2).gameObject.GetComponent<SpriteRenderer>().bounds.size.x;
-        Debug.Log(stickObject.transform.GetChild(2).gameObject.GetComponent<SpriteRenderer>().bounds.size.y);
-
-        stickObject.transform.GetChild(0).transform.position = new Vector3(stickObject.transform.GetChild(2).transform.position.x-x/2, stickObject.transform.GetChild(0).transform.position.y, 0);
-
-        stickArrowPos = stickObject.transform.GetChild(0).position;
-
-        stickObject.SetActive(false);
-
-        handleData = new HandleData();
-        SetCharacters();
-
-        previousStatus = new List<Status>();
-        currentStatus = Status.SKILL_CHOOSE;
-        GetComponent<UIManager>().SetUIOnAndOff(currentStatus);
-        SetInitStatusPlayer();
+        userInputNum = userInput.HandleUpdate();
     }
 
-    private void Update()
+    public void SetUpList()
     {
-        switch(currentStatus)
+        jc = new JsonConverter();
+        buttons = jc.FileToJsonArray1D<Megumin.GameSystem.Button>(Path.pathButton);
+        characters = jc.FileToJsonArray1D<MainCharacter>(Path.pathCharacter);
+        enemies = jc.FileToJsonArray1D<Enemy>(Path.pathEnemy);
+    }
+
+    public void SetUpParty()
+    {
+        party = jc.FileToJson<Party>(Path.pathParty);
+    }
+
+    public void SetUpStatus()
+    {
+        combatStatus = CombatStatus.CHOICE;
+        choiceStatus = ChoiceStatus.MAIN;
+    }
+
+    // 尚未加入區域判斷，怪物判斷
+    public void SetUpEnemy()
+    {
+        int enemyAmount = Random.Range(1, 4);
+        partyEnemy = new PartyEnemy();
+
+        for(int i = 0 ; i < enemyAmount ; i++)
         {
-            case Status.SKILL_CHOOSE:
-                playerController.HandleUpdateOptionSkill();
-                SetNextStatus(Status.ENEMY_CHOOSE);
+            partyEnemy.enemies.Add(enemies[0]);
+        }
+    }
+
+    public void SetUpScreen()
+    {
+        StartSetScreen startSetScreen = GetComponent<StartSetScreen>();
+        startSetScreen.SetCharacter(party);
+        startSetScreen.SetEnemy(partyEnemy);
+
+        StatusChoice();
+    }
+
+    private void StatusChoice()
+    {
+        switch(choiceStatus)
+        {
+            case ChoiceStatus.MAIN:
+                battleScreen = GetComponent<Main>();
+                break;
+        }
+        buttonsObj = battleScreen.ShowButtonText(buttons);
+        SetUpButton();
+    }
+
+    private void SetUpButton()
+    {
+        foreach(var singleButton in buttonsObj)
+        {
+            var localButton = singleButton.GetComponent<LocalButton>();
+            buttonNum(localButton.no, localButton);
+        }
+    }
+
+    private void buttonNum(int buttonNum, LocalButton localButton)
+    {
+        switch(buttonNum)
+        {
+            case 0:
+                localButton.actionClick = GoActionChoice;
+                break;
+            case 1:
+                localButton.actionClick = GoInfoChoice;
                 break;
 
-            case Status.ENEMY_CHOOSE:
-                playerController.HandleUpdateOptionEnemy();
-                SetNextStatus(Status.ARITHMETIC);
-                break;
-
-            case Status.ARITHMETIC:
-                ArithmeticInstance();
-                SetNextStatus(Status.SKILL_CHOOSE);
-                break;
         }
     }
 
-    private void SetInitStatusPlayer()
+    private void SetUpUserInput()
     {
-        playerController.ChangeStatus = () =>
-        {
-            
-            int listCount = previousStatus.Count;
-            if(listCount > 1 && previousStatus[listCount-1] != previousStatus[listCount-2])
-            {
-                previousStatus.RemoveAt(listCount-1);
-                return;
-            }
-            // 檢查玩家是否快速點擊導致 status 重複算過
-
-            previousStatus.Add(currentStatus);
-            currentStatus = nextStatus;
-            GetComponent<UIManager>().SetUIOnAndOff(currentStatus);
-        };
-
-        playerController.PreviousStatus = () =>
-        {
-            int listCount = previousStatus.Count;
-            nextStatus = currentStatus;
-            currentStatus = previousStatus[listCount-1];
-            previousStatus.RemoveAt(listCount-1);
-            GetComponent<UIManager>().SetUIOnAndOff(currentStatus);
-        };
+        userInput = GetComponent<UserInput>();
     }
 
-    private void SetNextStatus(Status status)
+    private void GoActionChoice()
     {
-        if(nextStatus == status)
-            return;
-
-        nextStatus = status;
+        choiceStatus = ChoiceStatus.ACTION;
+        buttonsObj.Clear();
     }
 
-    private void SetCharacters()
+    private void GoInfoChoice()
     {
-        handleData.character = new Character[10];
-        handleData.characterGameObjects = new GameObject[10];
-
-        int i = 0;
-        foreach(var data in charactersData)
-        {
-            handleData.character[i] = data.GetComponent<Character>();
-            handleData.character[i].position = data.transform.position;
-            handleData.characterGameObjects[i] = data;
-            i++;
-        }
-    }
-
-    private void ArithmeticInstance()
-    {
-        if(isArithmetic == true)
-            return;
-
-        isArithmetic = true;
-        GetSelector();
-        StartCoroutine(SendToArithmeticSystem());
-    }
-
-    private void GetSelector()
-    {
-        var objectFound = GameObject.FindGameObjectsWithTag("Selector");
-        foreach(var data in objectFound)
-        {
-            int temp = data.transform.parent.GetSiblingIndex();
-            switch(data.transform.parent.parent.name)
-            {
-                case "Enemy":
-                    handleData.choiceEnemy = temp;
-                    handleData.enemyGameObject = GameObject.Find("/Enemy").transform.GetChild(temp).gameObject;
-                    Debug.Log("enemy objects "+handleData.enemyGameObject.name);
-                    break;
-                
-                case "Grid":
-                    handleData.choiceButton = temp;
-                    break;
-
-                default:
-                    Debug.LogWarning(temp+" can't be found");
-                    break;
-            }
-        }
-    }
-
-    private IEnumerator SendToArithmeticSystem()
-    {
-        GetComponent<ArithmeticSystem>().CheckSkill(handleData, stickObject);
-        yield return new WaitUntil(() => { return handleData.isCoroutineStop;});
-        handleData.isCoroutineStop = false;
-
-        if(GetComponent<ArithmeticSystem>().checkGoalStick() || handleData.choiceButton != 1)
-        {
-            if(GetComponent<ArithmeticSystem>().checkGoalStick())
-            {
-                yield return new WaitForSecondsRealtime(0.1f);
-                stickObject.SetActive(false);
-            }
-
-            StartCoroutine(GetComponent<ArithmeticSystem>().VectorCalculate(handleData));
-            yield return new WaitUntil(() => { return handleData.isCoroutineStop;});
-            handleData.isCoroutineStop = false;
-
-            StartCoroutine(GetComponent<ArithmeticSystem>().MakeAnimation(handleData));
-            yield return new WaitUntil(() => { return handleData.isCoroutineStop;});
-            handleData.isCoroutineStop = false;
-            yield return new WaitForSeconds(1f);
-
-            StartCoroutine(GetComponent<ArithmeticSystem>().VectorCalculateBack(handleData));
-        }
-        currentStatus = nextStatus;
-    }
-
-    private void CheckList()
-    {
-        string all = "";
-        foreach(var data in previousStatus)
-        {
-            all += data+" ";
-        }
-        Debug.Log(all);
+        choiceStatus = ChoiceStatus.INFO;
+        buttonsObj.Clear();
     }
 }
