@@ -8,11 +8,11 @@ namespace Megumin.GameSystem
     {
         public int HandleUpdate()
         {
-            if(Input.GetKey(KeyCode.Keypad0))
+            if(Input.GetKeyDown(KeyCode.Keypad0))
             {
                 return 0;
             }
-            if(Input.GetKey(KeyCode.Keypad1))
+            if(Input.GetKeyDown(KeyCode.Keypad1))
             {
                 return 1;
             }

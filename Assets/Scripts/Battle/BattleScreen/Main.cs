@@ -1,28 +1,69 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-using Megumin.DataStructure;
 using Megumin.GameSystem;
 
 namespace Megumin.Battle
 {
     public class Main : MonoBehaviour, IBattleScreen
     {
-        public Text[] textButtons;
+        public GameObject[] gameObjButtons;
+        private List<Text> textButtons;
+        private List<LocalButton> localButtons;
 
-        public List<GameObject> ShowButtonText(List<GameSystem.Button> list)
+        public void SetUpButton(List<SerealizableButton> list)
         {
-            textButtons[0].text = list[0].name;
-            textButtons[1].text = list[1].name;
+            localButtons = new List<LocalButton>();
+            foreach(var gameObjButton in gameObjButtons)
+                localButtons.Add(gameObjButton.GetComponent<LocalButton>());
+            
+            localButtons[0].SetUp(list[0].no, list[0].name);
+            localButtons[1].SetUp(list[1].no, list[1].name);
+         }
 
-            var gameObjects =  GameObjectConverter.TextArrayToObjList(textButtons);
-            gameObjects[0].GetComponent<LocalButton>().no = list[0].no;
-            gameObjects[1].GetComponent<LocalButton>().no = list[1].no;
+        public void ShowButtonText()
+        {
+            
+            if(localButtons.Count == 0)
+                throw new Exception("");
 
-            return gameObjects;
+            textButtons = new List<Text>();
+            int i = 0; 
+            foreach(var gameObjButton in gameObjButtons)
+            {
+                textButtons.Add(gameObjButton.GetComponent<Text>());
+                textButtons[i].text = localButtons[i].name;
+                i++;
+            }
+        }
+
+        public GameObject[] GetButtonsGameObj()
+        {
+            return gameObjButtons;
+        }
+
+        public void ButtonDo(int num)
+        {
+            if(localButtons.Count == 0)
+                throw new Exception("");
+            
+
+            switch(num)
+            {
+                case 0:
+                    localButtons[0].Click();
+                    break;
+                case 1:
+                    localButtons[1].Click();
+                    break;
+            }
+        }
+
+        public void Close()
+        {
+            gameObjButtons[0].transform.parent.GetComponent<Canvas>().enabled = false;
         }
     }
 }

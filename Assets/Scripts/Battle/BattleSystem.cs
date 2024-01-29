@@ -6,11 +6,12 @@ using UnityEngine.UI;
 using Megumin.FileSystem;
 using Megumin.GameSystem;
 using Megumin.Battle;
+using UnityEngine.Rendering;
 
 public class BattleSystem : MonoBehaviour
 {
     private JsonConverter jc;
-    private List<Megumin.GameSystem.Button> buttons;
+    private List<SerealizableButton> buttons;
     private List<MainCharacter> characters;
     private List<Enemy> enemies;
     private Party party;
@@ -20,7 +21,7 @@ public class BattleSystem : MonoBehaviour
     private ChoiceStatus choiceStatus;
 
     private IBattleScreen battleScreen;
-    private List<GameObject> buttonsObj;
+    private GameObject[] buttonsObj;
 
     private UserInput userInput;
     private int userInputNum;
@@ -38,12 +39,13 @@ public class BattleSystem : MonoBehaviour
     public void Update()
     {
         userInputNum = userInput.HandleUpdate();
+        UserInputCheck();
     }
 
     public void SetUpList()
     {
         jc = new JsonConverter();
-        buttons = jc.FileToJsonArray1D<Megumin.GameSystem.Button>(Path.pathButton);
+        buttons = jc.FileToJsonArray1D<SerealizableButton>(Path.pathButton);
         characters = jc.FileToJsonArray1D<MainCharacter>(Path.pathCharacter);
         enemies = jc.FileToJsonArray1D<Enemy>(Path.pathEnemy);
     }
@@ -57,6 +59,7 @@ public class BattleSystem : MonoBehaviour
     {
         combatStatus = CombatStatus.CHOICE;
         choiceStatus = ChoiceStatus.MAIN;
+        StatusChoice();
     }
 
     // 尚未加入區域判斷，怪物判斷
@@ -76,8 +79,7 @@ public class BattleSystem : MonoBehaviour
         StartSetScreen startSetScreen = GetComponent<StartSetScreen>();
         startSetScreen.SetCharacter(party);
         startSetScreen.SetEnemy(partyEnemy);
-
-        StatusChoice();
+        SetUpButton();
     }
 
     private void StatusChoice()
@@ -87,21 +89,26 @@ public class BattleSystem : MonoBehaviour
             case ChoiceStatus.MAIN:
                 battleScreen = GetComponent<Main>();
                 break;
+            case ChoiceStatus.ACTION:
+                battleScreen = GetComponent<Action>();
+                break;
         }
-        buttonsObj = battleScreen.ShowButtonText(buttons);
-        SetUpButton();
     }
 
     private void SetUpButton()
     {
+        battleScreen.SetUpButton(buttons);
+        battleScreen.ShowButtonText();
+        buttonsObj = battleScreen.GetButtonsGameObj();
+
         foreach(var singleButton in buttonsObj)
         {
             var localButton = singleButton.GetComponent<LocalButton>();
-            buttonNum(localButton.no, localButton);
+            ButtonNum(localButton.no, localButton);
         }
     }
 
-    private void buttonNum(int buttonNum, LocalButton localButton)
+    private void ButtonNum(int buttonNum, LocalButton localButton)
     {
         switch(buttonNum)
         {
@@ -111,7 +118,21 @@ public class BattleSystem : MonoBehaviour
             case 1:
                 localButton.actionClick = GoInfoChoice;
                 break;
+        }
+        localButton.actionClick += battleScreen.Close;
+        localButton.actionClick += StatusChoice;
+    }
 
+    private void UserInputCheck()
+    {
+        switch(userInputNum)
+        {
+            case -1:
+                return;
+            default:
+                battleScreen.ButtonDo(userInputNum);
+                userInputNum = -1;
+                break;
         }
     }
 
@@ -123,12 +144,12 @@ public class BattleSystem : MonoBehaviour
     private void GoActionChoice()
     {
         choiceStatus = ChoiceStatus.ACTION;
-        buttonsObj.Clear();
+        buttonsObj = null;
     }
 
     private void GoInfoChoice()
     {
         choiceStatus = ChoiceStatus.INFO;
-        buttonsObj.Clear();
+        buttonsObj = null;
     }
 }

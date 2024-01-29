@@ -79,6 +79,7 @@ namespace Megumin.FileSystem
             return obj;
         }
 
+
         // 將 json file 的資料轉為指定的物件
         // input parameter:
         // path = absolute directory of the file you wanna save to
