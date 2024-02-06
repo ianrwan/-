@@ -4,11 +4,11 @@ namespace Megumin.GameSystem
 {
     public class Party
     {
-        public List<MainCharacter> characters;
+        public List<SerializableMainCharacter> characters;
 
         public Party()
         {
-            characters = new List<MainCharacter>();
+            characters = new List<SerializableMainCharacter>();
         }
     }
 }

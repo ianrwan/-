@@ -12,7 +12,7 @@ public class BattleSystem : MonoBehaviour
 {
     private JsonConverter jc;
     private List<SerealizableButton> buttons;
-    private List<MainCharacter> characters;
+    private List<SerializableMainCharacter> characters;
     private List<Enemy> enemies;
     private Party party;
     private PartyEnemy partyEnemy;
@@ -46,13 +46,18 @@ public class BattleSystem : MonoBehaviour
     {
         jc = new JsonConverter();
         buttons = jc.FileToJsonArray1D<SerealizableButton>(Path.pathButton);
-        characters = jc.FileToJsonArray1D<MainCharacter>(Path.pathCharacter);
+        characters = jc.FileToJsonArray1D<SerializableMainCharacter>(Path.pathCharacter);
         enemies = jc.FileToJsonArray1D<Enemy>(Path.pathEnemy);
     }
 
     public void SetUpParty()
     {
         party = jc.FileToJson<Party>(Path.pathParty);
+
+        SetCharacter setCharacter = GetComponent<SetCharacter>();
+        Debug.Log(party.characters.Count);
+        VectorHandle vectorHandle = new MainCharacterVectorHandle(party.characters.Count);
+        setCharacter.SetUpParty(party, vectorHandle.GetVectorDatas(Path.BattleSystem.battleCharacterVector));
     }
 
     public void SetUpStatus()
@@ -77,7 +82,7 @@ public class BattleSystem : MonoBehaviour
     public void SetUpScreen()
     {
         StartSetScreen startSetScreen = GetComponent<StartSetScreen>();
-        startSetScreen.SetCharacter(party);
+        // startSetScreen.SetCharacter(party);
         startSetScreen.SetEnemy(partyEnemy);
         SetUpButton();
     }

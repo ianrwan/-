@@ -5,6 +5,7 @@ using System;
 using Megumin.MeguminException;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using Newtonsoft.Json.Converters;
 
 namespace Megumin.FileSystem
 {

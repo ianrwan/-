@@ -8,13 +8,13 @@ namespace Megumin.GameSystem
 {
     public class SetParty
     {
-        public List<MainCharacter> characters;
+        public List<SerializableMainCharacter> characters;
         public Party party;
 
         public void FirstSetUp()
         {
             JsonConverter jc = new JsonConverter();
-            characters = jc.FileToJsonArray1D<MainCharacter>(Path.pathCharacter);
+            characters = jc.FileToJsonArray1D<SerializableMainCharacter>(Path.pathCharacter);
             Debug.Log("num "+characters.Count);
             
             party = new Party();

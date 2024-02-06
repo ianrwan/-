@@ -16,5 +16,14 @@ namespace Megumin.DataStructure
             }
             return gameObjects;
         }
+
+        public static List<T> GetListGameObjComponent<T>(List<GameObject> gameObjs)
+        {
+            List<T> components = new List<T>();
+            foreach(var gameObj in gameObjs)
+                components.Add(gameObj.GetComponent<T>());
+
+            return components;
+        }
     }
 }
