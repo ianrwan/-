@@ -18,7 +18,7 @@ namespace Megumin.Battle
             localButtons = new List<LocalButton>();
             foreach(var gameObjButton in gameObjButtons)
                 localButtons.Add(gameObjButton.GetComponent<LocalButton>());
-            Debug.Log(list.Count);
+            
             localButtons[0].SetUp(list[0].no, list[0].name);
             localButtons[1].SetUp(list[1].no, list[1].name);
          }

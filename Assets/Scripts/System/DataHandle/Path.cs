@@ -12,6 +12,7 @@ namespace Megumin.GameSystem
         public static class BattleSystem
         {
             public static string battleCharacterVector = Application.dataPath+@"\Storage\Setting\battleCharacterVector.json";
+            public static string battleChoiceVector = Application.dataPath+@"\Storage\Setting\battleChoiceVector.json";
         }
     }
 }

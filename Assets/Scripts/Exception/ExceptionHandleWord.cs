@@ -1,3 +1,5 @@
+using System;
+
 namespace Megumin.MeguminException
 {
     public static class ExceptionHandleWord
@@ -11,5 +13,25 @@ namespace Megumin.MeguminException
 
         public static string JsonSerealWrong = "Here is something wrong when serealizing Json";
         public static string JsonDeSerealWrong = "Here is something wrong when deserealizing Json";
+    }
+
+    public class BattleButtonException : Exception
+    {
+        private static string err = "Here is something wrong in Battle Button";
+        public BattleButtonException() : base(err)
+        {
+
+        }
+
+        public BattleButtonException(string message) : base(message)
+        {
+
+        }
+
+        public BattleButtonException(string message, Exception inner) : base(message, inner)
+        {
+
+        }
+
     }
 }

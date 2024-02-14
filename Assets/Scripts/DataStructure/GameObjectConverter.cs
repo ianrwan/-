@@ -25,5 +25,27 @@ namespace Megumin.DataStructure
 
             return components;
         }
+
+        public static List<T> GetListGameObjComponent<T>(GameObject[] gameObjs)
+        {
+            List<T> components = new List<T>();
+            for(int i = 0 ; i < gameObjs.Length ; i++)
+                components.Add(gameObjs[i].GetComponent<T>());
+
+            return components;
+        }
+
+        public static T[] ListArrayConverter<T>(List<T> list)
+        {
+            T[] array = new T[list.Count];
+
+            int i = 0;
+            foreach(var data in list)
+            {
+                array[i] = list[i];
+            }
+
+            return array;
+        }
     }
 }

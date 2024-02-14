@@ -6,7 +6,6 @@ using UnityEngine.UI;
 using Megumin.FileSystem;
 using Megumin.GameSystem;
 using Megumin.Battle;
-using UnityEngine.Rendering;
 
 public class BattleSystem : MonoBehaviour
 {
@@ -96,6 +95,7 @@ public class BattleSystem : MonoBehaviour
                 break;
             case ChoiceStatus.ACTION:
                 battleScreen = GetComponent<Action>();
+                SetUpButton();
                 break;
         }
     }
@@ -122,6 +122,24 @@ public class BattleSystem : MonoBehaviour
                 break;
             case 1:
                 localButton.actionClick = GoInfoChoice;
+                break;
+            case 2:
+                localButton.actionClick = GoEnemyChoice;
+                break;
+            case 3:
+                localButton.actionClick = GoSmallGame;
+                break;
+            case 4:
+                localButton.actionClick = GoItemChoice;
+                break;
+            case 5:
+                localButton.actionClick = GoArithmetic;
+                break;
+            case 6:
+                localButton.actionClick = GoArithmetic;
+                break;
+            case 7:
+                localButton.actionClick = GoChangeChoice;
                 break;
         }
         localButton.actionClick += battleScreen.Close;
@@ -156,5 +174,30 @@ public class BattleSystem : MonoBehaviour
     {
         choiceStatus = ChoiceStatus.INFO;
         buttonsObj = null;
+    }
+
+    private void GoEnemyChoice()
+    {
+        choiceStatus = ChoiceStatus.ENEMY;
+    }
+
+    private void GoItemChoice()
+    {
+        choiceStatus = ChoiceStatus.ITEM;
+    }
+
+    private void GoChangeChoice()
+    {
+        choiceStatus = ChoiceStatus.CHANGE;
+    }
+
+    private void GoArithmetic()
+    {
+        combatStatus = CombatStatus.ARITHMETIC;
+    }
+
+    private void GoSmallGame()
+    {
+        combatStatus = CombatStatus.SMALLGAME;
     }
 }

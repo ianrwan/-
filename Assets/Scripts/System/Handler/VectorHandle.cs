@@ -29,7 +29,6 @@ namespace Megumin.GameSystem
 
             JsonConverter jc = new JsonConverter();
             var list = jc.FileToJsonArray1D<Vector3>(path, jsonDictionary[amount]);
-            Debug.Log(list[0]);
             return list;
         }
     }

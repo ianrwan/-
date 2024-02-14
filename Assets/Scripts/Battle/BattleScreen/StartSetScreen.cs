@@ -36,7 +36,6 @@ public class StartSetScreen : MonoBehaviour
 
     private void SetRemainNotActive(Text[] texts, int i)
     {
-
         for( ; i < texts.Count(); i++)
         {
             texts[i].gameObject.SetActive(false);

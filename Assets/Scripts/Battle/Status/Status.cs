@@ -5,10 +5,5 @@ public enum CombatStatus
 
 public enum ChoiceStatus
 {
-    MAIN, CHARACTER, ACTION, ENEMY, INFO, ITEM
-}
-
-public enum CharacterAmout
-{
-    ONE, TWO, THREE
+    MAIN, CHARACTER, ACTION, ENEMY, INFO, ITEM, CHANGE
 }
