@@ -4,14 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using Megumin.GameSystem;
+using Megumin.DataStructure;
+using Megumin.MeguminException;
 
 namespace Megumin.Battle
 {
     public class Main : MonoBehaviour, IBattleScreen
     {
+        public GameObject canvaButtons;
         public GameObject[] gameObjButtons;
         private List<Text> textButtons;
         private List<LocalButton> localButtons;
+        private GameObject __toggle;
 
         public void SetUpButton(List<SerealizableButton> list)
         {
@@ -21,6 +25,15 @@ namespace Megumin.Battle
             
             localButtons[0].SetUp(list[0].no, list[0].name);
             localButtons[1].SetUp(list[1].no, list[1].name);
+
+            __SetUpToggle();
+         }
+
+         private void __SetUpToggle()
+         {
+            canvaButtons.GetComponent<SetToggle>().SetToggleOnFirstItem();
+            GameObjectFind gameObjectFind = new GameObjectFind();
+            __toggle = gameObjectFind.FindDecendantTag(canvaButtons, "Toggle")[0];
          }
 
         public void ShowButtonText()
@@ -44,26 +57,36 @@ namespace Megumin.Battle
             return gameObjButtons;
         }
 
-        public void ButtonDo(int num)
+        public void ButtonDo(KeyBoard key)
         {
             if(localButtons.Count == 0)
-                throw new Exception("");
-            
+                throw new BattleScreenException();
 
-            switch(num)
+            switch(key)
             {
-                case 0:
-                    localButtons[0].Click();
+                case KeyBoard.RIGHT:
+                    canvaButtons.GetComponent<SetToggle>().MoveToggle(key);
                     break;
-                case 1:
-                    localButtons[1].Click();
+                case KeyBoard.LEFT:
+                    canvaButtons.GetComponent<SetToggle>().MoveToggle(key);
+                    break;
+                case KeyBoard.UP:
+                    canvaButtons.GetComponent<SetToggle>().MoveToggle(key);
+                    break;
+                case KeyBoard.DOWN:
+                    canvaButtons.GetComponent<SetToggle>().MoveToggle(key);
+                    break;
+                case KeyBoard.Z:
+                    var localToggle = __toggle.GetComponent<GameSystem.Toggle>();
+                    var button = localToggle.GetToggleCurrent().GetComponent<LocalButton>();
+                    button.Click();
                     break;
             }
         }
 
         public void Close()
         {
-            gameObjButtons[0].transform.parent.GetComponent<Canvas>().enabled = false;
+            gameObjButtons[0].transform.parent.gameObject.SetActive(false);
         }
     }
 }

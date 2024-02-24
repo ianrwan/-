@@ -19,6 +19,11 @@ namespace Megumin.GameSystem
         {
             actionClick?.Invoke();
         }
+
+        public void Cover()
+        {
+            
+        }
     }
 
     public class SerealizableButton

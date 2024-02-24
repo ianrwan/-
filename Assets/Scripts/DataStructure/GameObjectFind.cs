@@ -13,32 +13,14 @@ namespace Megumin.DataStructure
 
         public GameObjectFind()
         {
-            childs = new List<GameObject>();
-            childsArr = new GameObject[100];
+            __Reset();
         }
 
-        // public List<GameObject> FindDecendantTag(GameObject parent, string tag)
-        // {
-        //     int childCount = parent.transform.childCount;
-
-        //     if(parent.tag == tag)
-        //     {
-        //         childs.Add(parent); // GameObject 無法順利加入 list 裡面，加入時會發生錯誤
-        //         childsArr[i] = parent;
-        //         childs[i] = childsArr[i];
-        //         i++;
-        //     }
-
-        //     if(childCount == 0)
-        //         return null;
-
-        //     for(int i = 0 ; i < childCount ; i++)
-        //     {
-        //         FindDecendantTag(parent.transform.GetChild(i).gameObject, tag);
-        //     }
-
-        //     return childs;
-        // }
+        private void __Reset()
+        {
+            childsArr = new GameObject[100];
+            tagAmount = 0;
+        }
 
         private GameObject[] __FindDecendantTag(GameObject parent, string tag)
         {
@@ -62,8 +44,36 @@ namespace Megumin.DataStructure
 
         public GameObject[] FindDecendantTag(GameObject parent, string tag)
         {
+            __Reset();
             __FindDecendantTag(parent, tag);
             
+            ArrayDealer<GameObject> arrayDealer = new ArrayDealer<GameObject>(childsArr);
+            return arrayDealer.TrimArray(tagAmount);
+        }
+
+        private void __FindDecendantComponentIsAttached<T>(GameObject parent)
+        {
+            int childCount = parent.transform.childCount;
+
+            if(parent.GetComponent<T>() != null)
+                childsArr[tagAmount++] = parent;
+
+            if(childCount == 0)
+                return;
+
+            for(int i = 0 ; i < childCount ; i++)
+            {
+                __FindDecendantComponentIsAttached<T>(parent.transform.GetChild(i).gameObject);
+            }
+
+            return;
+        }
+
+        public GameObject[] FindDecendantComponentIsAttached<T>(GameObject parent)
+        {
+            __Reset();
+            __FindDecendantComponentIsAttached<T>(parent);
+
             ArrayDealer<GameObject> arrayDealer = new ArrayDealer<GameObject>(childsArr);
             return arrayDealer.TrimArray(tagAmount);
         }

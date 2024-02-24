@@ -23,7 +23,7 @@ public class BattleSystem : MonoBehaviour
     private GameObject[] buttonsObj;
 
     private UserInput userInput;
-    private int userInputNum;
+    private KeyBoard userInputNum;
 
     public void Start()
     {
@@ -150,11 +150,11 @@ public class BattleSystem : MonoBehaviour
     {
         switch(userInputNum)
         {
-            case -1:
+            case KeyBoard.NULL:
                 return;
             default:
                 battleScreen.ButtonDo(userInputNum);
-                userInputNum = -1;
+                userInputNum = KeyBoard.NULL;
                 break;
         }
     }

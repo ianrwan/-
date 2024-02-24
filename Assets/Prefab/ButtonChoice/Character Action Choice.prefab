@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9039719396144862654}
   - component: {fileID: 6308613307333864682}
   - component: {fileID: 7583001894322399266}
+  - component: {fileID: 7913197098349034166}
   m_Layer: 5
   m_Name: Attack
   m_TagString: Buttons
@@ -95,6 +96,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   no: 0
   name: 
+--- !u!114 &7913197098349034166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2296729435272604650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4cf3a34ee8f6eb40ae48212e152e798, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  x: 0
+  y: 0
 --- !u!1 &2774403307202360806
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,6 +122,7 @@ GameObject:
   - component: {fileID: 5057506246601493635}
   - component: {fileID: 2823337502413084802}
   - component: {fileID: 3770036581866806551}
+  - component: {fileID: 5740760221427341542}
   m_Layer: 5
   m_Name: Change
   m_TagString: Buttons
@@ -190,6 +206,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   no: 0
   name: 
+--- !u!114 &5740760221427341542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2774403307202360806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4cf3a34ee8f6eb40ae48212e152e798, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  x: 2
+  y: 1
 --- !u!1 &4779709344784968966
 GameObject:
   m_ObjectHideFlags: 0
@@ -202,6 +232,7 @@ GameObject:
   - component: {fileID: 776339692817234356}
   - component: {fileID: 514044883933057448}
   - component: {fileID: 2981725808292858490}
+  - component: {fileID: 4150973734876930558}
   m_Layer: 5
   m_Name: Special Attack
   m_TagString: Buttons
@@ -285,6 +316,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   no: 0
   name: 
+--- !u!114 &4150973734876930558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4779709344784968966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4cf3a34ee8f6eb40ae48212e152e798, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  x: 1
+  y: 0
 --- !u!1 &4802905098057337332
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,6 +342,7 @@ GameObject:
   - component: {fileID: 6292866401194418282}
   - component: {fileID: 4925305887603936713}
   - component: {fileID: 635071544893304750}
+  - component: {fileID: 2817242461924195121}
   m_Layer: 5
   m_Name: Defense
   m_TagString: Buttons
@@ -380,6 +426,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   no: 0
   name: 
+--- !u!114 &2817242461924195121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4802905098057337332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4cf3a34ee8f6eb40ae48212e152e798, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  x: 0
+  y: 1
 --- !u!1 &4957965713641387397
 GameObject:
   m_ObjectHideFlags: 0
@@ -392,6 +452,7 @@ GameObject:
   - component: {fileID: 9051244810672605426}
   - component: {fileID: 2359023494284085472}
   - component: {fileID: 4520121539264829120}
+  - component: {fileID: 3801551188640784515}
   m_Layer: 5
   m_Name: Run Away
   m_TagString: Buttons
@@ -475,6 +536,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   no: 0
   name: 
+--- !u!114 &3801551188640784515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4957965713641387397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4cf3a34ee8f6eb40ae48212e152e798, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  x: 2
+  y: 0
 --- !u!1 &5198644221362179710
 GameObject:
   m_ObjectHideFlags: 0
@@ -487,6 +562,7 @@ GameObject:
   - component: {fileID: 5394667734231850040}
   - component: {fileID: 3260865238368621375}
   - component: {fileID: 174435741881982250}
+  - component: {fileID: 978784242632124999}
   m_Layer: 5
   m_Name: Tools
   m_TagString: Buttons
@@ -570,6 +646,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   no: 0
   name: 
+--- !u!114 &978784242632124999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5198644221362179710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4cf3a34ee8f6eb40ae48212e152e798, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  x: 1
+  y: 1
 --- !u!1 &7283402921072527850
 GameObject:
   m_ObjectHideFlags: 0
@@ -623,6 +713,8 @@ GameObject:
   - component: {fileID: 857771168616086464}
   - component: {fileID: 4720797810484035488}
   - component: {fileID: 547188624577320010}
+  - component: {fileID: 6235497280333894523}
+  - component: {fileID: 8410987524692962818}
   m_Layer: 5
   m_Name: Character Action Choice
   m_TagString: Untagged
@@ -689,3 +781,30 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6235497280333894523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8518833313231332920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 501c1d4ab0137cd46bd482d56a2fce35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  height: 0
+  width: 0
+--- !u!114 &8410987524692962818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8518833313231332920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acbd4878a401f19448d066c4cfe443ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toggle: {fileID: 507802408960389267, guid: a7567cb396d78ee4bb6c221dcf95e088, type: 3}
