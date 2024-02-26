@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Megumin.GameSystem;
 
 public interface IBattleScreen
@@ -10,4 +9,6 @@ public interface IBattleScreen
     public GameObject[] GetButtonsGameObj();
     public void ButtonDo(KeyBoard num);
     public void Close();
+    public void Destroy();
+    public void Open();
 }

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using Megumin.FileSystem;
 using Megumin.GameSystem;
 using Megumin.Battle;
+using UnityEditor.Rendering;
 
 public class BattleSystem : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class BattleSystem : MonoBehaviour
 
     private UserInput userInput;
     private KeyBoard userInputNum;
+
+    private Stack<ChoiceStatus> choiceStatusStack;
 
     public void Start()
     {
@@ -54,7 +57,6 @@ public class BattleSystem : MonoBehaviour
         party = jc.FileToJson<Party>(Path.pathParty);
 
         SetCharacter setCharacter = GetComponent<SetCharacter>();
-        Debug.Log(party.characters.Count);
         VectorHandle vectorHandle = new MainCharacterVectorHandle(party.characters.Count);
         setCharacter.SetUpParty(party, vectorHandle.GetVectorDatas(Path.BattleSystem.battleCharacterVector));
     }
@@ -63,6 +65,8 @@ public class BattleSystem : MonoBehaviour
     {
         combatStatus = CombatStatus.CHOICE;
         choiceStatus = ChoiceStatus.MAIN;
+        choiceStatusStack = new Stack<ChoiceStatus>();
+        choiceStatusStack.Push(choiceStatus);
         StatusChoice();
     }
 
@@ -95,7 +99,6 @@ public class BattleSystem : MonoBehaviour
                 break;
             case ChoiceStatus.ACTION:
                 battleScreen = GetComponent<Action>();
-                SetUpButton();
                 break;
         }
     }
@@ -144,6 +147,7 @@ public class BattleSystem : MonoBehaviour
         }
         localButton.actionClick += battleScreen.Close;
         localButton.actionClick += StatusChoice;
+        localButton.actionClick += SetUpButton;
     }
 
     private void UserInputCheck()
@@ -152,11 +156,26 @@ public class BattleSystem : MonoBehaviour
         {
             case KeyBoard.NULL:
                 return;
+            case KeyBoard.X:
+                __ReturnBack();
+                break;
             default:
                 battleScreen.ButtonDo(userInputNum);
-                userInputNum = KeyBoard.NULL;
                 break;
         }
+        userInputNum = KeyBoard.NULL;
+    }
+
+    private void __ReturnBack()
+    {
+        if(choiceStatusStack.Count <= 1)
+            return;
+
+        battleScreen.Destroy();
+        choiceStatusStack.Pop();
+        choiceStatus = choiceStatusStack.Peek();
+        StatusChoice();
+        battleScreen.Open();
     }
 
     private void SetUpUserInput()
@@ -167,28 +186,31 @@ public class BattleSystem : MonoBehaviour
     private void GoActionChoice()
     {
         choiceStatus = ChoiceStatus.ACTION;
-        buttonsObj = null;
+        choiceStatusStack.Push(choiceStatus);
     }
 
     private void GoInfoChoice()
     {
         choiceStatus = ChoiceStatus.INFO;
-        buttonsObj = null;
+        choiceStatusStack.Push(choiceStatus);
     }
 
     private void GoEnemyChoice()
     {
         choiceStatus = ChoiceStatus.ENEMY;
+        choiceStatusStack.Push(choiceStatus);
     }
 
     private void GoItemChoice()
     {
         choiceStatus = ChoiceStatus.ITEM;
+        choiceStatusStack.Push(choiceStatus);
     }
 
     private void GoChangeChoice()
     {
         choiceStatus = ChoiceStatus.CHANGE;
+        choiceStatusStack.Push(choiceStatus);
     }
 
     private void GoArithmetic()

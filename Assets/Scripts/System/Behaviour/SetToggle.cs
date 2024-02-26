@@ -16,15 +16,14 @@ public class SetToggle : MonoBehaviour
     {
         if(GetComponent<PosRelative2DArr>() == null)
             throw new ToggleException("PosRelative can't get");
+            
         __posRelative2DArr = GetComponent<PosRelative2DArr>();
         __posRelative2DArr.SetUp();
 
         if(__posRelative2DArr == null || toggle == null)
             throw new ToggleException("Toggle isn't set");
-        Debug.Log(__posRelative2DArr.pos2D[0][0].name);
 
         toggle = Instantiate(toggle, __posRelative2DArr.pos2D[0][0].transform);
-        // toggle.GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
         __componetToggle = toggle.GetComponent<Toggle>();
 
         __componetToggle.xPosRelative = 0;

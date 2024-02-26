@@ -11,11 +11,6 @@ namespace Megumin.GameSystem
         public Queue<string> nameRecord{get; private set;}
         private Queue<GameObject> gameObjectsRecord;
 
-        private void Start()
-        {
-            SetUp();
-        }
-
         public void SetUp()
         {
             var parent = transform.parent.gameObject;

@@ -10,7 +10,8 @@ namespace Megumin.Battle
 {
     public class Action : MonoBehaviour, IBattleScreen
     {
-        public GameObject canvaButtons;
+        public GameObject prefabCanvaButtons;
+        private GameObject canvaButtons;
         public GameObject[] gameObjButtons;
         private List<Text> textButtons;
         private List<LocalButton> localButtons;
@@ -42,7 +43,7 @@ namespace Megumin.Battle
         {
             var gameObjsChar = GameObject.FindGameObjectsWithTag("Characters");
 
-            canvaButtons = Instantiate(canvaButtons, gameObjsChar[0].transform);
+            canvaButtons = Instantiate(prefabCanvaButtons, gameObjsChar[0].transform);
             
             VectorHandle vectorHandle = new ChoiceVectorHandle(1);
             var vector = vectorHandle.GetVectorDatas(Path.BattleSystem.battleChoiceVector);
@@ -104,7 +105,17 @@ namespace Megumin.Battle
 
         public void Close()
         {
-            canvaButtons.GetComponent<Canvas>().enabled = false;
+            canvaButtons.SetActive(false);
+        }
+
+        public void Open()
+        {
+            canvaButtons.SetActive(true);
+        }
+
+        public void Destroy()
+        {
+            Destroy(canvaButtons);
         }
     }
 }

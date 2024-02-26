@@ -81,12 +81,25 @@ namespace Megumin.Battle
                     var button = localToggle.GetToggleCurrent().GetComponent<LocalButton>();
                     button.Click();
                     break;
+                case KeyBoard.X:
+                    
+                    break;
             }
         }
 
         public void Close()
         {
             gameObjButtons[0].transform.parent.gameObject.SetActive(false);
+        }
+
+        public void Open()
+        {
+            gameObjButtons[0].transform.parent.gameObject.SetActive(true);
+        }
+
+        public void Destroy()
+        {
+            __toggle.GetComponent<GameSystem.Toggle>().MoveToggle(gameObjButtons[0]);
         }
     }
 }
