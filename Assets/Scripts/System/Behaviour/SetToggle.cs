@@ -7,10 +7,19 @@ using Megumin.GameSystem;
 // 使用這個 Behaviour 必須要有 PosRelative2DArr 且必須要放在一起
 public class SetToggle : MonoBehaviour
 {
+    public GameObject prefabToggle;
     public GameObject toggle;
     private PosRelative2DArr __posRelative2DArr;
     private Toggle __componetToggle;
     private bool __isToggleMove = false;
+
+    public void Init()
+    {
+        toggle = null;
+        __posRelative2DArr.Init();
+        __componetToggle = null;
+        __isToggleMove = false;
+    }
 
     public void SetToggleOnFirstItem()
     {
@@ -19,11 +28,11 @@ public class SetToggle : MonoBehaviour
             
         __posRelative2DArr = GetComponent<PosRelative2DArr>();
         __posRelative2DArr.SetUp();
-
-        if(__posRelative2DArr == null || toggle == null)
+        
+        if(__posRelative2DArr == null || prefabToggle == null)
             throw new ToggleException("Toggle isn't set");
 
-        toggle = Instantiate(toggle, __posRelative2DArr.pos2D[0][0].transform);
+        toggle = Instantiate(prefabToggle, __posRelative2DArr.pos2D[0][0].transform);
         __componetToggle = toggle.GetComponent<Toggle>();
 
         __componetToggle.xPosRelative = 0;

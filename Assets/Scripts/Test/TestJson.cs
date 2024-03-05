@@ -3,19 +3,17 @@
 // using UnityEngine;
 
 // using Megumin.FileSystem;
-// using Megumin.GameSystem;
 
 // public class TestJson : MonoBehaviour
 // {
+//     public TestHandle testHandle;
 //     void Start()
 //     {
 //         JsonConverter jc = new JsonConverter();
-//         List<Button> listButton = jc.FileToJsonArray1D<Button>(Application.dataPath+@"\Storage\Button\button.json");
+//         testHandle = new TestHandle();
 
-//         foreach(var data in listButton)
-//         {
-//             Debug.Log(data.no);
-//             Debug.Log(data.name);
-//         }
+//         jc.JsonSaveToFile<TestHandle>(testHandle, @"C:\Users\Ianwa\Documents\作業\畢業專題\廢材勇者_Project\RPG Test\Assets\Scripts\Test\Test.json");
+//         var data = jc.FileToJson<TestHandle>(@"C:\Users\Ianwa\Documents\作業\畢業專題\廢材勇者_Project\RPG Test\Assets\Scripts\Test\Test.json");
+//         Debug.Log("jsonConvert: "+data);
 //     }
 // }

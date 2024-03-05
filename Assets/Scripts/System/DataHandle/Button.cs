@@ -1,18 +1,19 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Megumin.GameSystem
 {
     public class LocalButton : MonoBehaviour, IButton
     {
-        public int no;
+        public ButtonChoice status;
         public new string name;
         public Action actionClick;
 
-        public void SetUp(int no, string name)
+        public void SetUp(SerealizableButton button)
         {
-            this.no = no;
-            this.name = name;
+            status = button.status;
+            name = button.name;
         }
 
         public void Click()
@@ -28,7 +29,7 @@ namespace Megumin.GameSystem
 
     public class SerealizableButton
     {
-        public int no;
+        public ButtonChoice status;
         public string name;
     }
 }

@@ -6,21 +6,15 @@ using UnityEngine.UI;
 using Megumin.FileSystem;
 using Megumin.GameSystem;
 using Megumin.Battle;
-using UnityEditor.Rendering;
 
 public class BattleSystem : MonoBehaviour
 {
-    private JsonConverter jc;
-    private List<SerealizableButton> buttons;
-    private List<SerializableMainCharacter> characters;
-    private List<Enemy> enemies;
-    private Party party;
-    private PartyEnemy partyEnemy;
+    private BattleHandleData battleHandleData;
 
     private CombatStatus combatStatus;
     private ChoiceStatus choiceStatus;
 
-    private IBattleScreen battleScreen;
+    private BattleScreen battleScreen;
     private GameObject[] buttonsObj;
 
     private UserInput userInput;
@@ -33,7 +27,6 @@ public class BattleSystem : MonoBehaviour
         SetUpList();
         SetUpParty();
         SetUpStatus();
-        SetUpEnemy();
         SetUpScreen();
         SetUpUserInput();
     }
@@ -46,19 +39,19 @@ public class BattleSystem : MonoBehaviour
 
     public void SetUpList()
     {
-        jc = new JsonConverter();
-        buttons = jc.FileToJsonArray1D<SerealizableButton>(Path.pathButton);
-        characters = jc.FileToJsonArray1D<SerializableMainCharacter>(Path.pathCharacter);
-        enemies = jc.FileToJsonArray1D<Enemy>(Path.pathEnemy);
+        battleHandleData = new BattleHandleData();
     }
 
     public void SetUpParty()
     {
-        party = jc.FileToJson<Party>(Path.pathParty);
-
         SetCharacter setCharacter = GetComponent<SetCharacter>();
-        VectorHandle vectorHandle = new MainCharacterVectorHandle(party.characters.Count);
-        setCharacter.SetUpParty(party, vectorHandle.GetVectorDatas(Path.BattleSystem.battleCharacterVector));
+        VectorHandle vectorHandle = new MainCharacterVectorHandle(battleHandleData.party.characters.Count);
+        setCharacter.SetUpParty(battleHandleData.party, vectorHandle.GetVectorDatas(Path.BattleSystem.battleCharacterVector));
+
+        battleHandleData.partyEnemy = new PartyEnemy();
+        SetEnemy setEnemy = GetComponent<SetEnemy>();
+        vectorHandle = new EnemyVectorHandle(battleHandleData.partyEnemy.Amount);
+        setEnemy.SetUpParty(battleHandleData, vectorHandle.GetVectorDatas(Path.BattleSystem.battleEnemyVector));
     }
 
     public void SetUpStatus()
@@ -68,26 +61,6 @@ public class BattleSystem : MonoBehaviour
         choiceStatusStack = new Stack<ChoiceStatus>();
         choiceStatusStack.Push(choiceStatus);
         StatusChoice();
-    }
-
-    // 尚未加入區域判斷，怪物判斷
-    public void SetUpEnemy()
-    {
-        int enemyAmount = Random.Range(1, 4);
-        partyEnemy = new PartyEnemy();
-
-        for(int i = 0 ; i < enemyAmount ; i++)
-        {
-            partyEnemy.enemies.Add(enemies[0]);
-        }
-    }
-
-    public void SetUpScreen()
-    {
-        StartSetScreen startSetScreen = GetComponent<StartSetScreen>();
-        // startSetScreen.SetCharacter(party);
-        startSetScreen.SetEnemy(partyEnemy);
-        SetUpButton();
     }
 
     private void StatusChoice()
@@ -100,54 +73,88 @@ public class BattleSystem : MonoBehaviour
             case ChoiceStatus.ACTION:
                 battleScreen = GetComponent<Action>();
                 break;
+            case ChoiceStatus.ENEMY:
+                battleScreen = GetComponent<Enemy>();
+                break;
+        }
+    }
+
+    public void SetUpScreen()
+    {
+        battleScreen.SetUp(battleHandleData);
+        battleScreen.ShowText();
+
+        //暫時使用
+        switch(choiceStatus)
+        {
+            case ChoiceStatus.MAIN:
+                SetUpButton();
+                break;
+            case ChoiceStatus.ACTION:
+                SetUpButton();
+                break;
         }
     }
 
     private void SetUpButton()
     {
-        battleScreen.SetUpButton(buttons);
-        battleScreen.ShowButtonText();
-        buttonsObj = battleScreen.GetButtonsGameObj();
+        buttonsObj = battleScreen.GetGameObjects();
 
         foreach(var singleButton in buttonsObj)
         {
             var localButton = singleButton.GetComponent<LocalButton>();
-            ButtonNum(localButton.no, localButton);
+            __SetActionInCurrent(localButton);
+            ButtonNum(localButton.status, localButton);
         }
     }
 
-    private void ButtonNum(int buttonNum, LocalButton localButton)
+    private void __SetActionInCurrent(LocalButton localButton)
     {
-        switch(buttonNum)
+        switch(choiceStatus)
         {
-            case 0:
-                localButton.actionClick = GoActionChoice;
-                break;
-            case 1:
-                localButton.actionClick = GoInfoChoice;
-                break;
-            case 2:
-                localButton.actionClick = GoEnemyChoice;
-                break;
-            case 3:
-                localButton.actionClick = GoSmallGame;
-                break;
-            case 4:
-                localButton.actionClick = GoItemChoice;
-                break;
-            case 5:
-                localButton.actionClick = GoArithmetic;
-                break;
-            case 6:
-                localButton.actionClick = GoArithmetic;
-                break;
-            case 7:
-                localButton.actionClick = GoChangeChoice;
+            case ChoiceStatus.ACTION:
+                IButtonChoice buttonScreen = (Action)battleScreen;
+                localButton.actionClick += () =>
+                {
+                    battleHandleData.playerAction = buttonScreen.GetButtonChoice();
+                };
                 break;
         }
+    }
+
+    private void ButtonNum(ButtonChoice status, LocalButton localButton)
+    {
+        switch(status)
+        {
+            case ButtonChoice.BATTLE_START_BATTLE:
+                localButton.actionClick += GoActionChoice;
+                break;
+            case ButtonChoice.BATTLE_INFO:
+                localButton.actionClick += GoInfoChoice;
+                break;
+            case ButtonChoice.BATTLE_ATTACK:
+                localButton.actionClick += GoEnemyChoice;
+                break;
+            case ButtonChoice.BATTLE_SPECIAL_ATTACK:
+                localButton.actionClick += GoSmallGame;
+                break;
+            case ButtonChoice.BATTLE_ITEM:
+                localButton.actionClick += GoItemChoice;
+                break;
+            case ButtonChoice.BATTLE_DEFENCE:
+                localButton.actionClick += GoArithmetic;
+                break;
+            case ButtonChoice.BATTLE_RETREAT:
+                localButton.actionClick += GoArithmetic;
+                break;
+            case ButtonChoice.BATTLE_CHANGE:
+                localButton.actionClick += GoChangeChoice;
+                break;
+        }
+
         localButton.actionClick += battleScreen.Close;
         localButton.actionClick += StatusChoice;
-        localButton.actionClick += SetUpButton;
+        localButton.actionClick += SetUpScreen;
     }
 
     private void UserInputCheck()
@@ -158,12 +165,13 @@ public class BattleSystem : MonoBehaviour
                 return;
             case KeyBoard.X:
                 __ReturnBack();
+                userInputNum = KeyBoard.NULL;
                 break;
             default:
-                battleScreen.ButtonDo(userInputNum);
+                battleScreen.UserInput(userInputNum);
+                userInputNum = KeyBoard.NULL;
                 break;
         }
-        userInputNum = KeyBoard.NULL;
     }
 
     private void __ReturnBack()

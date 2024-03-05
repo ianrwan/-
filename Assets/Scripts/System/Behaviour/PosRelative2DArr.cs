@@ -14,6 +14,17 @@ public class PosRelative2DArr : MonoBehaviour
     private GameObject[] __pos2DGameObjects;
     private List<PosRelative2D> __pos2Ds;
 
+    public void Init()
+    {
+        height = 0;
+        width = 0;
+        pos2D = null;
+
+        width1DArray = null;
+        __pos2DGameObjects = null;
+        __pos2Ds = null;
+    }
+
     public void SetUp()
     {
         __SetPos2DArr();
