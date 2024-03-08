@@ -270,7 +270,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 16ea795ec1b348d44b67ffd411827acc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -389,7 +389,7 @@ Canvas:
   m_GameObject: {fileID: 238250896}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 2000376720}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -1079,7 +1079,7 @@ Canvas:
   m_GameObject: {fileID: 1327784250}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 2000376720}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -1500,7 +1500,7 @@ Canvas:
   m_GameObject: {fileID: 1604393861}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 1706985810}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -1614,7 +1614,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 2147483647
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1652,7 +1652,6 @@ GameObject:
   - component: {fileID: 1714071238}
   - component: {fileID: 1714071237}
   - component: {fileID: 1714071236}
-  - component: {fileID: 1714071239}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -1710,18 +1709,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1714071239
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1714071234}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6df7278488ed1004ea584f638fd8cef2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1975275360
 GameObject:
   m_ObjectHideFlags: 0

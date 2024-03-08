@@ -39,7 +39,7 @@ namespace Megumin.Battle
             VectorHandle vectorHandle = new ChoiceVectorHandle(1);
             var vector = vectorHandle.GetVectorDatas(Path.BattleSystem.battleChoiceVector);
             var rectTransform = _parent.GetComponent<RectTransform>();
-            rectTransform.anchoredPosition = new Vector3(vector[0].x, rectTransform.position.y, rectTransform.position.z);
+            rectTransform.anchoredPosition = new Vector3(vector[0].x, vector[0].y, rectTransform.position.z);
 
             GameObjectFind gameObjectFind = new GameObjectFind();
 
