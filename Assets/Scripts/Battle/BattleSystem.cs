@@ -10,6 +10,7 @@ using Megumin.Battle;
 public class BattleSystem : MonoBehaviour
 {
     private BattleHandleData battleHandleData;
+    private ArithmeticHandleData arithmeticHandleData;
 
     private CombatStatus combatStatus;
     private ChoiceStatus choiceStatus;
@@ -20,6 +21,8 @@ public class BattleSystem : MonoBehaviour
     private UserInput userInput;
     private KeyBoard userInputNum;
 
+    private BattleArithmetic battleArithmetic;
+
     private Stack<ChoiceStatus> choiceStatusStack;
 
     public void Start()
@@ -29,12 +32,24 @@ public class BattleSystem : MonoBehaviour
         SetUpStatus();
         SetUpScreen();
         SetUpUserInput();
+        SetUpArithmetic();
     }
 
     public void Update()
     {
         userInputNum = userInput.HandleUpdate();
         UserInputCheck();
+        CheckArithmetic();
+    }
+
+    public void Reset()
+    {
+        combatStatus = CombatStatus.CHOICE;
+
+        int statckNum = choiceStatusStack.Count;
+        for(int i = 1 ; i < statckNum; i++)
+            ReturnBack();
+        SetUpStatus();
     }
 
     public void SetUpList()
@@ -65,6 +80,15 @@ public class BattleSystem : MonoBehaviour
 
     private void StatusChoice()
     {
+        switch(combatStatus)
+        {
+            case CombatStatus.CHOICE:
+                break;
+            case CombatStatus.ARITHMETIC:
+                battleArithmetic.On();
+                break;
+        }
+
         switch(choiceStatus)
         {
             case ChoiceStatus.MAIN:
@@ -88,10 +112,14 @@ public class BattleSystem : MonoBehaviour
         switch(choiceStatus)
         {
             case ChoiceStatus.MAIN:
+                battleScreen.Open();
                 SetUpButton();
                 break;
             case ChoiceStatus.ACTION:
                 SetUpButton();
+                break;
+            case ChoiceStatus.ENEMY:
+                EndChoice();
                 break;
         }
     }
@@ -103,23 +131,36 @@ public class BattleSystem : MonoBehaviour
         foreach(var singleButton in buttonsObj)
         {
             var localButton = singleButton.GetComponent<LocalButton>();
-            __SetActionInCurrent(localButton);
+            SetActionInCurrent(localButton);
             ButtonNum(localButton.status, localButton);
         }
     }
 
-    private void __SetActionInCurrent(LocalButton localButton)
+    private void SetActionInCurrent(LocalButton localButton)
     {
         switch(choiceStatus)
         {
             case ChoiceStatus.ACTION:
-                IButtonChoice buttonScreen = (Action)battleScreen;
+                IGetUpperData<ButtonChoice> buttonScreen = (Action)battleScreen;
                 localButton.actionClick += () =>
                 {
-                    battleHandleData.playerAction = buttonScreen.GetButtonChoice();
+                    arithmeticHandleData.combatChoice = buttonScreen.GetData();
                 };
                 break;
         }
+    }
+
+    private void EndChoice()
+    {
+        IGetUpperData<GameObject> enemyScreen = (Enemy)battleScreen;
+        Click endChoice = GetComponent<Click>();
+        endChoice.actionClick = () =>
+        {
+            arithmeticHandleData.enemy = enemyScreen.GetData();
+        };
+        endChoice.actionClick += GoArithmetic;
+        endChoice.actionClick += battleScreen.Close;
+        endChoice.actionClick += StatusChoice;
     }
 
     private void ButtonNum(ButtonChoice status, LocalButton localButton)
@@ -157,6 +198,28 @@ public class BattleSystem : MonoBehaviour
         localButton.actionClick += SetUpScreen;
     }
 
+    private void SetUpArithmetic()
+    {
+        arithmeticHandleData = new ArithmeticHandleData();
+        battleArithmetic = GetComponent<BattleArithmetic>();
+        battleArithmetic.SetUp(arithmeticHandleData);
+    }
+
+    private void CheckArithmetic()
+    {
+       
+        if(combatStatus != CombatStatus.ARITHMETIC)
+            return;
+
+        if(battleArithmetic.isEnd == false)
+            return;
+
+        Click end = GetComponent<Click>();
+        end.Do();
+        battleArithmetic.Off();
+        Reset();
+    }
+
     private void UserInputCheck()
     {
         switch(userInputNum)
@@ -164,7 +227,7 @@ public class BattleSystem : MonoBehaviour
             case KeyBoard.NULL:
                 return;
             case KeyBoard.X:
-                __ReturnBack();
+                ReturnBack();
                 userInputNum = KeyBoard.NULL;
                 break;
             default:
@@ -174,7 +237,7 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-    private void __ReturnBack()
+    private void ReturnBack()
     {
         if(choiceStatusStack.Count <= 1)
             return;

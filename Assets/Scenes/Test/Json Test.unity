@@ -713,6 +713,8 @@ GameObject:
   - component: {fileID: 1021050632}
   - component: {fileID: 1021050633}
   - component: {fileID: 1021050635}
+  - component: {fileID: 1021050637}
+  - component: {fileID: 1021050638}
   m_Layer: 0
   m_Name: BattleSystem
   m_TagString: Untagged
@@ -837,6 +839,30 @@ MonoBehaviour:
   prefab: {fileID: 0}
   _parent: {fileID: 1327784250}
   _gameObjects: []
+--- !u!114 &1021050637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1021050627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cc09a9266db1b14db9d3007eeb442f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1021050638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1021050627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6158bcf35e18e734f9149fc0115ee759, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1236108341 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 857771168616086464, guid: 89416fab7ba915742ab69f645d655c66, type: 3}
@@ -1249,10 +1275,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a891d6d4db6d72c41bfea9010720d9ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testHandle:
-    testStatus1: 0
-    testStatus2: 1
-    testStatus3: 2
 --- !u!1 &1574741578
 GameObject:
   m_ObjectHideFlags: 0

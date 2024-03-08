@@ -17,7 +17,7 @@ namespace Megumin.Battle
         public List<SerializableEnemy> enemies{get; private set;}
         public Party party;
         public PartyEnemy partyEnemy;
-        public ButtonChoice playerAction;
+        public bool isEndChoice;
 
         public BattleHandleData()
         {
