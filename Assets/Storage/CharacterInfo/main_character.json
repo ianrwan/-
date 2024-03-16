@@ -2,16 +2,38 @@
     "type": "main_character",
     "data":[
         {
-            "no": 0,
-            "job": "hero",
-            "hp": 10,    
-            "speed": 10
+            "no": "CHARACTER_HERO",
+            "job": "勇者",
+            "hp": 10,
+            "speed": 10,
+            "tool":[
+                "TOOL_POTION_RECOVERY_II",
+                "TOOL_POTION_RECOVERY_I",
+                "TOOL_POTION_RECOVERY_I",
+                "TOOL_POTION_ALL_RECOVERY_I",
+                "TOOL_POTION_HURT_I",
+                "TOOL_POTION_ALL_HURT_I",
+                "TOOL_POTION_POISON"
+            ]
         },
         {
-            "no": 0,
-            "job": "mage",
-            "hp": 10,    
-            "speed": 10
+            "no": "CHARACTER_MAGE",
+            "job": "法師",
+            "hp": 5,
+            "speed": 8,
+            "tool":[
+                "TOOL_POTION_RECOVERY_II",
+                "TOOL_POTION_RECOVERY_I"
+            ]
+        },
+        {
+            "no": "CHARACTER_WARRIOR",
+            "job": "戰士",
+            "hp": 20,
+            "speed": 3,
+            "tool":[
+                
+            ]
         }
     ]
 }

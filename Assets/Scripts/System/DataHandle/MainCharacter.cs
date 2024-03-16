@@ -1,30 +1,34 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Megumin.GameSystem
 {
     public class LocalMainCharacter : MonoBehaviour
     {
-        public int no;
+        public Character no;
         public string job;
         public int hp;
         public int speed;
+        public Tool[] tool;
 
-        public void SetUp(int no, string job, int hp, int speed)
+        public void SetUp(SerializableMainCharacter serializableMainCharacter)
         {
-            this.no = no;
-            this.job = job;
-            this.hp = hp;
-            this.speed = speed;
+            this.no = serializableMainCharacter.no;
+            this.job = serializableMainCharacter.job;
+            this.hp = serializableMainCharacter.hp;
+            this.speed = serializableMainCharacter.speed;
+            this.tool = serializableMainCharacter.tool;
         }
     }
 
     [Serializable]
     public class SerializableMainCharacter
     {
-        public int no;
+        public Character no;
         public string job;
         public int hp;
         public int speed;
+        public Tool[] tool;
     }
 }

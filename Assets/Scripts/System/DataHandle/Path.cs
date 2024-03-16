@@ -8,6 +8,7 @@ namespace Megumin.GameSystem
         public static string pathParty = Application.dataPath+@"\Storage\CharacterInfo\party.json";
         public static string pathButton = Application.dataPath+@"\Storage\Setting\button.json";
         public static string pathEnemy = Application.dataPath+@"\Storage\Enemy\enemy.json";
+        public static string pathTool = Application.dataPath+@"\Storage\Tool\tool.json";
 
         public static class BattleSystem
         {

@@ -1,22 +1,5 @@
 {
-  "characters": [
-    {
-      "no": 0,
-      "job": "勇者",
-      "hp": 10,
-      "speed": 10
-    },
-    {
-      "no": 1,
-      "job": "法師",
-      "hp": 5,
-      "speed": 8
-    },
-    {
-      "no": 2,
-      "job": "戰士",
-      "hp": 20,
-      "speed": 3
-    }
+  "party":[
+    "CHARACTER_HERO", "CHARACTER_MAGE", "CHARACTER_WARRIOR"
   ]
 }

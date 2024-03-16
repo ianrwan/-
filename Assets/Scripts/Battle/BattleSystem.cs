@@ -60,7 +60,8 @@ public class BattleSystem : MonoBehaviour
     public void SetUpParty()
     {
         SetCharacter setCharacter = GetComponent<SetCharacter>();
-        VectorHandle vectorHandle = new MainCharacterVectorHandle(battleHandleData.party.characters.Count);
+        battleHandleData.party = setCharacter.SetParty(battleHandleData.partySerial.party ,battleHandleData.dictionarySet);
+        VectorHandle vectorHandle = new MainCharacterVectorHandle(battleHandleData.party.GetPartyListSerial().Count);
         setCharacter.SetUpParty(battleHandleData.party, vectorHandle.GetVectorDatas(Path.BattleSystem.battleCharacterVector));
 
         battleHandleData.partyEnemy = new PartyEnemy();
@@ -100,6 +101,9 @@ public class BattleSystem : MonoBehaviour
             case ChoiceStatus.ENEMY:
                 battleScreen = GetComponent<Enemy>();
                 break;
+            case ChoiceStatus.ITEM:
+                battleScreen = GetComponent<Item>();
+                break;
         }
     }
 
@@ -117,6 +121,9 @@ public class BattleSystem : MonoBehaviour
                 break;
             case ChoiceStatus.ACTION:
                 SetUpButton();
+                break;
+            case ChoiceStatus.ITEM:
+                EndChoice();
                 break;
             case ChoiceStatus.ENEMY:
                 EndChoice();
@@ -152,13 +159,25 @@ public class BattleSystem : MonoBehaviour
 
     private void EndChoice()
     {
-        IGetUpperData<GameObject> enemyScreen = (Enemy)battleScreen;
+        IGetUpperData<GameObject> screen;
         Click endChoice = GetComponent<Click>();
-        endChoice.actionClick = () =>
+
+        switch(choiceStatus)
         {
-            arithmeticHandleData.enemy = enemyScreen.GetData();
-        };
-        endChoice.actionClick += GoArithmetic;
+            case ChoiceStatus.ENEMY:
+                screen = (Enemy)battleScreen;
+                endChoice.actionClick = () => {arithmeticHandleData.enemy = screen.GetData();};
+                endChoice.actionClick += GoArithmetic;
+                break;
+            case ChoiceStatus.ITEM:
+                screen = (Item)battleScreen;
+                endChoice.actionClick = () => {arithmeticHandleData.SetUpTool(screen.GetData());};
+                IGetUpperData<TeamChoice> teamChoice = (Item)battleScreen;
+                endChoice.actionClick += () => {battleHandleData.teamChoice = teamChoice.GetData();};
+                endChoice.actionClick += GoAllTeam;
+                break;
+        }
+        
         endChoice.actionClick += battleScreen.Close;
         endChoice.actionClick += StatusChoice;
     }
@@ -292,5 +311,10 @@ public class BattleSystem : MonoBehaviour
     private void GoSmallGame()
     {
         combatStatus = CombatStatus.SMALLGAME;
+    }
+
+    private void GoAllTeam()
+    {
+        choiceStatus = ChoiceStatus.ALL_TEAM;
     }
 }

@@ -1,0 +1,41 @@
+{
+    "type":"tool",
+    "data":[
+        {
+            "code": "TOOL_POTION_RECOVERY_I",
+            "use": "FRIENDLY",
+            "name": "回復藥水初級",
+            "explain": "回復 HP10"
+        },
+        {
+            "code": "TOOL_POTION_RECOVERY_II",
+            "use": "FRIENDLY",
+            "name": "回復藥水中級",
+            "explain": "回復 HP20"
+        },
+        {
+            "code": "TOOL_POTION_ALL_RECOVERY_I",
+            "use": "TEAM_FRIENDLY",
+            "name": "全體治癒藥水初級",
+            "explain": "回復全體 HP5"
+        },
+        {
+            "code": "TOOL_POTION_HURT_I",
+            "use": "UNFRIENDLY",
+            "name": "傷害藥水初級",
+            "explain": "受傷害 HP5"
+        },
+        {
+            "code": "TOOL_POTION_ALL_HURT_I",
+            "use": "TEAM_UNFRIENDLY",
+            "name": "全體傷害藥水初級",
+            "explain": "全體傷害 HP3"
+        },
+        {
+            "code": "TOOL_POTION_POISON",
+            "use": "UNFRIENDLY",
+            "name": "中毒藥水",
+            "explain": "使他人中毒"
+        }
+    ]
+}

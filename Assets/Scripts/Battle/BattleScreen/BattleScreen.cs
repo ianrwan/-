@@ -11,6 +11,7 @@ namespace Megumin.Battle
     public abstract class BattleScreen : MonoBehaviour
     {
         public GameObject prefab;
+        public GameObject root;
         public GameObject _parent;
         public GameObject[] _gameObjects;
         protected GameObject _toggle;
@@ -18,7 +19,7 @@ namespace Megumin.Battle
         protected System.Action _zPress;
         protected System.Action _xPress;
 
-        public abstract void SetUp(BattleHandleData handleData);
+        public abstract void SetUp(BattleHandleData battleHandleData);
         public abstract void ShowText();
         protected abstract void _SetUpInput();
         protected abstract void _LocalDatasExceptionHandle();
@@ -29,7 +30,7 @@ namespace Megumin.Battle
             _SetUpInput();
         }
 
-        public void UserInput(KeyBoard key)
+        public virtual void UserInput(KeyBoard key)
         {
             _LocalDatasExceptionHandle();
 

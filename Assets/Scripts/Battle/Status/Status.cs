@@ -5,5 +5,5 @@ public enum CombatStatus
 
 public enum ChoiceStatus
 {
-    MAIN, CHARACTER, ACTION, ENEMY, INFO, ITEM, CHANGE
+    MAIN, CHARACTER, ACTION, ENEMY, INFO, ITEM, CHANGE, ALL_TEAM
 }

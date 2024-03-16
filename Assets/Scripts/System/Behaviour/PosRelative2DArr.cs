@@ -22,7 +22,7 @@ public class PosRelative2DArr : MonoBehaviour
 
         width1DArray = null;
         __pos2DGameObjects = null;
-        __pos2Ds = null;
+        __pos2Ds.Clear();
     }
 
     public void SetUp()

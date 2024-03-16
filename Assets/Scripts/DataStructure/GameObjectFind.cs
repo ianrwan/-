@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Megumin.GameSystem;
 using UnityEngine;
 
 namespace Megumin.DataStructure
@@ -10,6 +11,7 @@ namespace Megumin.DataStructure
         public List<GameObject> childs;
         public GameObject[] childsArr;
         private int tagAmount;
+        public string[] strings;
 
         public GameObjectFind()
         {
@@ -56,7 +58,9 @@ namespace Megumin.DataStructure
             int childCount = parent.transform.childCount;
 
             if(parent.GetComponent<T>() != null)
+            {
                 childsArr[tagAmount++] = parent;
+            }
 
             if(childCount == 0)
                 return;

@@ -11,21 +11,35 @@ namespace Megumin.Battle
     [Serializable]
     public class BattleHandleData
     {
-        private JsonConverter __jc;
+        private JsonConverter jc;
         public List<SerealizableButton> buttons{get; private set;}
         public List<SerializableMainCharacter> characters{get; private set;}
         public List<SerializableEnemy> enemies{get; private set;}
+        public List<SerializableTool> tools{get; private set;}
+        public SerializableParty partySerial;
         public Party party;
         public PartyEnemy partyEnemy;
-        public bool isEndChoice;
+        public DictionarySet dictionarySet;
+
+        public TeamChoice teamChoice;
 
         public BattleHandleData()
         {
-            __jc = new JsonConverter();
-            buttons = __jc.FileToJsonArray1D<SerealizableButton>(Path.pathButton);
-            characters = __jc.FileToJsonArray1D<SerializableMainCharacter>(Path.pathButton);
-            enemies = __jc.FileToJsonArray1D<SerializableEnemy>(Path.pathEnemy);
-            party = __jc.FileToJson<Party>(Path.pathParty);
+            jc = new JsonConverter();
+            buttons = jc.FileToJsonArray1D<SerealizableButton>(Path.pathButton);
+            characters = jc.FileToJsonArray1D<SerializableMainCharacter>(Path.pathCharacter);
+            enemies = jc.FileToJsonArray1D<SerializableEnemy>(Path.pathEnemy);
+            tools = jc.FileToJsonArray1D<SerializableTool>(Path.pathTool);
+            partySerial = jc.FileToJson<SerializableParty>(Path.pathParty);
+
+            MakeDictionary();
+        }
+
+        private void MakeDictionary()
+        {
+            dictionarySet = new DictionarySet();
+            dictionarySet.MakeDictionary(tools);
+            dictionarySet.MakeDictionary(characters);
         }
     }
 }
