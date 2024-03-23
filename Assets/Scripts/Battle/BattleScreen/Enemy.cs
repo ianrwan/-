@@ -46,6 +46,7 @@ namespace Megumin.Battle
                 var localToggle = _toggle.GetComponent<Toggle>();
                 __enemy = localToggle.GetToggleCurrent();
                 var endChoice = GetComponent<Click>();
+                Destroy();
                 endChoice.Do();
             };
         }

@@ -37,7 +37,7 @@ namespace Megumin.Battle
         private void SetToolFromCharacter(BattleHandleData handleData)
         {
             var characters = GameObject.FindGameObjectsWithTag("Characters");
-            var tools = characters[1].GetComponent<LocalMainCharacter>().tool; // 暫時放置角色
+            var tools = characters[0].GetComponent<LocalMainCharacter>().tool; // 暫時放置角色
 
             int arraySize = tools.Length/5+1;
             serializableTools = new SerializableTool[arraySize][];

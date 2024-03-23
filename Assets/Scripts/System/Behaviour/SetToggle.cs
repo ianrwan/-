@@ -28,13 +28,7 @@ public class SetToggle : MonoBehaviour
 
     public void SetToggleOnFirstItem()
     {
-        if(GetComponent<PosRelative2DArr>() == null)
-            throw new ToggleException("PosRelative can't get");
-
-        __posRelative2DArr = GetComponent<PosRelative2DArr>();
-        __posRelative2DArr.SetUp();
-        
-        SetUpToggle();
+        SetToggleOnFirstItem(0, 0);
     }
 
     public void SetToggleOnFirstItem(GameObject[] gameObjects)
@@ -42,6 +36,17 @@ public class SetToggle : MonoBehaviour
         __posRelative2DArr = GetComponent<PosRelative2DArr>();
         __posRelative2DArr.SetUp(gameObjects);
         SetUpToggle();
+    }
+
+    public void SetToggleOnFirstItem(int x, int y)
+    {
+        if(GetComponent<PosRelative2DArr>() == null)
+            throw new ToggleException("PosRelative can't get");
+
+        __posRelative2DArr = GetComponent<PosRelative2DArr>();
+        __posRelative2DArr.SetUp();
+        
+        SetUpToggle(x, y);
     }
 
     // Exclude 代表將已經處理好的 GameObjcet 傳進來 (傳入要直接 set toggle 的 gameobject)
