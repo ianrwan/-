@@ -35,6 +35,18 @@ namespace Megumin.DataStructure
             return components;
         }
 
+        public static List<T> ArrayListConverter<T>(T[] array)
+        {
+            List<T> list = new List<T>();
+
+            foreach(var data in array)
+            {
+                list.Add(data);
+            }
+
+            return list;
+        }
+
         public static T[] ListArrayConverter<T>(List<T> list)
         {
             T[] array = new T[list.Count];

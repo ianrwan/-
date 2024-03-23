@@ -19,6 +19,7 @@ namespace Megumin.Battle
         {
             Debug.Log(arithmeticHandleData.combatChoice);
             Debug.Log(arithmeticHandleData.enemy);
+            Debug.Log(arithmeticHandleData.target);
             isEnd = true;
         }
 

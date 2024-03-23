@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7427407093216216962}
   - component: {fileID: 9140013962499818238}
   - component: {fileID: 1307062913524660919}
+  - component: {fileID: 3500752044670765590}
   m_Layer: 5
   m_Name: MainCharacter
   m_TagString: Characters
@@ -97,3 +98,18 @@ MonoBehaviour:
   job: 
   hp: 0
   speed: 0
+  tool: 
+--- !u!114 &3500752044670765590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6734972490219073451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4cf3a34ee8f6eb40ae48212e152e798, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  x: 0
+  y: 0

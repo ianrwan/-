@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Megumin.MeguminException;
+using Megumin.DataStructure;
 using UnityEngine;
 
 namespace Megumin.GameSystem

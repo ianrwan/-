@@ -13,6 +13,11 @@ public class SetToggle : MonoBehaviour
     private Toggle __componetToggle;
     private bool __isToggleMove = false;
 
+    [Tooltip( "是否強制將橫向變換時設為 x = 0")]
+    public bool isHorizentalSetFirst = false;
+    [Tooltip( "是否強制將縱向變換時設為 y = 0")]
+    public bool isVerticalSetFirst = false; 
+
     public void Init()
     {
         toggle = null;
@@ -25,18 +30,53 @@ public class SetToggle : MonoBehaviour
     {
         if(GetComponent<PosRelative2DArr>() == null)
             throw new ToggleException("PosRelative can't get");
-            
+
         __posRelative2DArr = GetComponent<PosRelative2DArr>();
         __posRelative2DArr.SetUp();
         
+        SetUpToggle();
+    }
+
+    public void SetToggleOnFirstItem(GameObject[] gameObjects)
+    {
+        __posRelative2DArr = GetComponent<PosRelative2DArr>();
+        __posRelative2DArr.SetUp(gameObjects);
+        SetUpToggle();
+    }
+
+    // Exclude 代表將已經處理好的 GameObjcet 傳進來 (傳入要直接 set toggle 的 gameobject)
+    public void SetToggleOnFirstItemExclude(GameObject[] gameObjects)
+    {
+       SetToggleOnFirstItemExclude(gameObjects, 0, 0);
+    }
+
+    public void SetToggleOnFirstItemExclude(GameObject[] gameObjects, int x, int y)
+    {
+        __posRelative2DArr = GetComponent<PosRelative2DArr>();
+        __posRelative2DArr.SetUpExclude(gameObjects);
+        SetUpToggle(x, y);
+    }
+
+    private void SetUpToggle()
+    {
+        SetUpToggle(0 , 0);
+    }
+
+    private void SetUpToggle(int x, int y)
+    {
         if(__posRelative2DArr == null || prefabToggle == null)
             throw new ToggleException("Toggle isn't set");
 
-        toggle = Instantiate(prefabToggle, __posRelative2DArr.pos2D[0][0].transform);
+        toggle = Instantiate(prefabToggle, __posRelative2DArr.pos2D[x][y].transform);
         __componetToggle = toggle.GetComponent<Toggle>();
 
-        __componetToggle.xPosRelative = 0;
-        __componetToggle.yPosRelative = 0;
+        SetToggleRelative(x, y);
+    }
+
+    private void SetToggleRelative(int x, int y)
+    {
+        __componetToggle.xPosRelative = x;
+        __componetToggle.yPosRelative = y;
     }
 
     public void MoveToggle(KeyBoard key)
@@ -66,7 +106,10 @@ public class SetToggle : MonoBehaviour
 
     private bool __MoveRight()
     {
-        if(__componetToggle.yPosRelative+1 >= __posRelative2DArr.width)
+        if(isHorizentalSetFirst)
+            __componetToggle.xPosRelative = 0;
+
+        if(__componetToggle.yPosRelative+1 >= __posRelative2DArr.Width1DArray[__componetToggle.xPosRelative])
             return false;
         else
             __componetToggle.yPosRelative += 1;
@@ -75,6 +118,9 @@ public class SetToggle : MonoBehaviour
 
     private bool __MoveLeft()
     {
+        if(isHorizentalSetFirst)
+            __componetToggle.xPosRelative = 0;
+
         if(__componetToggle.yPosRelative-1 < 0)
             return false;
         else
@@ -84,6 +130,9 @@ public class SetToggle : MonoBehaviour
 
     private bool __MoveUp()
     {
+        if(isVerticalSetFirst)
+            __componetToggle.yPosRelative = 0;
+
         if(__componetToggle.xPosRelative-1 < 0)
             return false;
         else
@@ -93,7 +142,10 @@ public class SetToggle : MonoBehaviour
 
     private bool __MoveDown()
     {
-        if(__componetToggle.xPosRelative+1 >= __posRelative2DArr.height)
+        if(isVerticalSetFirst)
+            __componetToggle.yPosRelative = 0;
+
+        if(__componetToggle.xPosRelative+1 >= __posRelative2DArr.Height1DArray[__componetToggle.yPosRelative])
             return false;
         else
             __componetToggle.xPosRelative += 1;

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using Megumin.FileSystem;
 using Megumin.GameSystem;
 using Megumin.Battle;
+using Unity.VisualScripting;
 
 public class BattleSystem : MonoBehaviour
 {
@@ -104,6 +105,10 @@ public class BattleSystem : MonoBehaviour
             case ChoiceStatus.ITEM:
                 battleScreen = GetComponent<Item>();
                 break;
+            case ChoiceStatus.ALL_TEAM:
+                battleScreen = GetComponent<AllTeam>();
+                SetUpScreen();
+                break;
         }
     }
 
@@ -111,8 +116,6 @@ public class BattleSystem : MonoBehaviour
     {
         battleScreen.SetUp(battleHandleData);
         battleScreen.ShowText();
-
-        //暫時使用
         switch(choiceStatus)
         {
             case ChoiceStatus.MAIN:
@@ -122,10 +125,22 @@ public class BattleSystem : MonoBehaviour
             case ChoiceStatus.ACTION:
                 SetUpButton();
                 break;
+        }
+
+        SetUpClick();
+    }
+
+    private void SetUpClick()
+    {
+        switch(choiceStatus)
+        {
             case ChoiceStatus.ITEM:
                 EndChoice();
                 break;
             case ChoiceStatus.ENEMY:
+                EndChoice();
+                break;
+            case ChoiceStatus.ALL_TEAM:
                 EndChoice();
                 break;
         }
@@ -175,6 +190,11 @@ public class BattleSystem : MonoBehaviour
                 IGetUpperData<TeamChoice> teamChoice = (Item)battleScreen;
                 endChoice.actionClick += () => {battleHandleData.teamChoice = teamChoice.GetData();};
                 endChoice.actionClick += GoAllTeam;
+                break;
+            case ChoiceStatus.ALL_TEAM:
+                screen = (AllTeam)battleScreen;
+                endChoice.actionClick = () => {arithmeticHandleData.target = screen.GetData();};
+                endChoice.actionClick += GoArithmetic;
                 break;
         }
         
@@ -234,7 +254,7 @@ public class BattleSystem : MonoBehaviour
             return;
 
         Click end = GetComponent<Click>();
-        end.Do();
+        // end.Do();
         battleArithmetic.Off();
         Reset();
     }
@@ -265,6 +285,7 @@ public class BattleSystem : MonoBehaviour
         choiceStatusStack.Pop();
         choiceStatus = choiceStatusStack.Peek();
         StatusChoice();
+        SetUpClick();
         battleScreen.Open();
     }
 
@@ -316,5 +337,6 @@ public class BattleSystem : MonoBehaviour
     private void GoAllTeam()
     {
         choiceStatus = ChoiceStatus.ALL_TEAM;
+        choiceStatusStack.Push(choiceStatus);
     }
 }

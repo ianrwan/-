@@ -14,6 +14,7 @@ namespace Megumin.Battle
         public ButtonChoice combatChoice;
         public GameObject character;
         public GameObject enemy;
+        public GameObject target;
         public Tool tool;
 
         public class Tool
@@ -25,6 +26,7 @@ namespace Megumin.Battle
                 if(tool.GetComponent<LocalTool>() == null)
                     throw new NoComponentException("No LocalTool in GameObject, Tool can't be set");
 
+                this.tool = tool;
                 localTool = tool.GetComponent<LocalTool>();
             }
         }

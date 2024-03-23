@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using Megumin.GameSystem;
 using Megumin.DataStructure;
@@ -35,9 +35,23 @@ namespace Megumin.Battle
             for(int i = 0 ; i < partyAmount ; i++)
             {
                 characters[i].SetUp(party.GetPartyListSerial()[i]);
+                SetRelativePos(party.Amount, i);   
             }
 
             SetUpText();
+        }
+
+        private void SetRelativePos(int total, int tag)
+        {
+            var posRelative = mainCharactersGObj[tag].GetComponent<PosRelative2D>();
+            double d = Math.Ceiling((double)tag-total/2);
+            
+            if(d >= 0)
+                posRelative.x = Convert.ToUInt32(0+2*d);
+            else
+                posRelative.x = Convert.ToUInt32(Math.Abs(1+2*d));
+
+            posRelative.y = 0;
         }
 
         public Party SetParty(List<GameSystem.Character> characters, DictionarySet dictionarySet)

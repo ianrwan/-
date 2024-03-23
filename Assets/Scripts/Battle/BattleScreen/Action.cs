@@ -34,7 +34,7 @@ namespace Megumin.Battle
         {
             var gameObjsChar = GameObject.FindGameObjectsWithTag("Characters");
 
-            _parent = Instantiate(prefab, gameObjsChar[0].transform);
+            _parent = Instantiate(prefab, gameObjsChar[1].transform); // 暫時放置角色
 
             VectorHandle vectorHandle = new ChoiceVectorHandle(1);
             var vector = vectorHandle.GetVectorDatas(Path.BattleSystem.battleChoiceVector);
