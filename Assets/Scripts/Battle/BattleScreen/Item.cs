@@ -37,7 +37,7 @@ namespace Megumin.Battle
         private void SetToolFromCharacter(BattleHandleData handleData)
         {
             var characters = GameObject.FindGameObjectsWithTag("Characters");
-            var tools = characters[0].GetComponent<LocalMainCharacter>().tool; // 暫時放置角色
+            var tools = characters[0].GetComponent<LocalMainCharacter>().Tool; // 暫時放置角色
 
             int arraySize = tools.Length/5+1;
             serializableTools = new SerializableTool[arraySize][];
@@ -90,7 +90,7 @@ namespace Megumin.Battle
                 var textGameObj = _gameObjects[i].transform.GetChild(0);
 
                 var text = textGameObj.GetComponent<Text>();
-                text.text = localTool.name;
+                text.text = localTool.ToolInfo.name;
             }
         }
 
@@ -133,7 +133,7 @@ namespace Megumin.Battle
             var gameObj = localToggle.GetToggleCurrent();
             var localTool = gameObj.GetComponent<LocalTool>();
 
-            text.text = localTool.explain;
+            text.text = localTool.ToolInfo.explain;
         }
 
         private void RightClick()
@@ -179,7 +179,7 @@ namespace Megumin.Battle
             {
                 tool = _toggle.GetComponent<GameSystem.Toggle>().GetToggleCurrent();
                 var localTool = tool.GetComponent<LocalTool>();
-                teamChoice = localTool.use;
+                teamChoice = localTool.ToolInfo.use;
                 Click click = GetComponent<Click>();
                 click.Do();
             };

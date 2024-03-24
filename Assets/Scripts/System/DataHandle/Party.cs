@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace Megumin.GameSystem
 {
+    [Serializable]
     public class Party
     {
         private List<SerializableMainCharacter> characters;

@@ -5,6 +5,7 @@ using UnityEngine;
 
 using Megumin.GameSystem;
 using Megumin.FileSystem;
+using Megumin.MeguminException;
 
 namespace Megumin.Battle
 {
@@ -22,6 +23,32 @@ namespace Megumin.Battle
         public DictionarySet dictionarySet;
 
         public TeamChoice teamChoice;
+
+        // Look what's character is in action currently
+        [SerializeField]
+        private GameObject currentMainCharacter;
+        public GameObject CurrentMainCharacter
+        {
+            get
+            {
+                try
+                {
+                    return currentMainCharacter;
+                }
+                catch(NullReferenceException)
+                {
+                    Debug.LogWarning("You are trying access currentMainCharacter which is null");
+                }
+                return null;
+            }
+            set
+            {
+                if(value.GetComponent<LocalMainCharacter>() == null)
+                    throw new NoComponentException("LocalMainCharacter component isn't in the GameObject");
+                
+                currentMainCharacter = value;
+            }
+        }
 
         public BattleHandleData()
         {

@@ -38,6 +38,7 @@ namespace Megumin.Battle
                 SetRelativePos(party.Amount, i);   
             }
 
+            party.SetParty(mainCharactersGObj);
             SetUpText();
         }
 
@@ -65,6 +66,12 @@ namespace Megumin.Battle
             return party;
         }
 
+        // set the main character current
+        public GameObject SetCurrentMainCharacter(int currentIndex)
+        {
+            return mainCharactersGObj[currentIndex];
+        }
+
         // 以下為暫時使用，之後會變更
         public void SetUpText()
         {
@@ -73,7 +80,7 @@ namespace Megumin.Battle
 
             for(int i = 0 ; i < partyAmount ; i++)
             {
-                texts[i].text = characters[i].job+"\nhp "+characters[i].hp;
+                texts[i].text = characters[i].Job+"\nhp "+characters[i].HP;
             }
         }
     }

@@ -5,17 +5,16 @@ namespace Megumin.GameSystem
 {
     public class LocalTool : MonoBehaviour
     {
-        public Tool code;
-        public TeamChoice use;
-        public new string name;
-        public string explain;
+        [SerializeField]
+        private SerializableTool toolInfo;
+        public SerializableTool ToolInfo
+        {
+            get => toolInfo;
+        }
 
         public void SetUp(SerializableTool serializableTool)
         {
-            code = serializableTool.code;
-            use = serializableTool.use;
-            name = serializableTool.name;
-            explain = serializableTool.explain;
+            toolInfo = serializableTool;
         }
     }
 

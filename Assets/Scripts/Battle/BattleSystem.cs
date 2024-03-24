@@ -7,6 +7,8 @@ using Megumin.FileSystem;
 using Megumin.GameSystem;
 using Megumin.Battle;
 using Unity.VisualScripting;
+using Unity.VisualScripting.ReorderableList.Element_Adder_Menu;
+using System.Linq;
 
 public class BattleSystem : MonoBehaviour
 {
@@ -69,6 +71,8 @@ public class BattleSystem : MonoBehaviour
         SetEnemy setEnemy = GetComponent<SetEnemy>();
         vectorHandle = new EnemyVectorHandle(battleHandleData.partyEnemy.Amount);
         setEnemy.SetUpParty(battleHandleData, vectorHandle.GetVectorDatas(Path.BattleSystem.battleEnemyVector));
+
+        battleHandleData.CurrentMainCharacter = setCharacter.SetCurrentMainCharacter(0);
     }
 
     public void SetUpStatus()
@@ -88,7 +92,7 @@ public class BattleSystem : MonoBehaviour
                 break;
             case CombatStatus.ARITHMETIC:
                 battleArithmetic.On();
-                break;
+                return;
         }
 
         switch(choiceStatus)
@@ -114,6 +118,9 @@ public class BattleSystem : MonoBehaviour
 
     public void SetUpScreen()
     {
+        if(combatStatus == CombatStatus.ARITHMETIC)
+            return;
+            
         battleScreen.SetUp(battleHandleData);
         battleScreen.ShowText();
         switch(choiceStatus)
@@ -252,7 +259,7 @@ public class BattleSystem : MonoBehaviour
 
         if(battleArithmetic.isEnd == false)
             return;
-
+       
         Click end = GetComponent<Click>();
         // end.Do();
         battleArithmetic.Off();
@@ -280,7 +287,6 @@ public class BattleSystem : MonoBehaviour
     {
         if(choiceStatusStack.Count <= 1)
             return;
-
         battleScreen.Destroy();
         choiceStatusStack.Pop();
         choiceStatus = choiceStatusStack.Peek();

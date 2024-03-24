@@ -15,19 +15,25 @@ namespace Megumin.Battle
         public GameObject character;
         public GameObject enemy;
         public GameObject target;
+
+        [Header("Tool")]
         public Tool tool;
 
+        [Serializable]
         public class Tool
         {
-            public GameObject tool;
-            public LocalTool localTool;
+            private GameSystem.Tool toolID;
+            public GameSystem.Tool ToolID
+            {
+                get => toolID;
+            }
+
             public Tool(GameObject tool)
             {
                 if(tool.GetComponent<LocalTool>() == null)
                     throw new NoComponentException("No LocalTool in GameObject, Tool can't be set");
 
-                this.tool = tool;
-                localTool = tool.GetComponent<LocalTool>();
+                toolID = tool.GetComponent<LocalTool>().ToolInfo.code;
             }
         }
 
