@@ -7,6 +7,7 @@ namespace Megumin.Battle
 {
     public class BattleArithmetic : MonoBehaviour
     {
+        private static int check = 1;
         private ArithmeticHandleData arithmeticHandleData;
         public bool isEnd{get; private set;}
 
@@ -17,9 +18,10 @@ namespace Megumin.Battle
 
         public void On()
         {
-            Debug.Log(arithmeticHandleData.combatChoice);
-            Debug.Log(arithmeticHandleData.enemy);
-            Debug.Log(arithmeticHandleData.target);
+            Debug.Log("in Arithmeic"+check++);
+            // Debug.Log(arithmeticHandleData.combatChoice);
+            // Debug.Log(arithmeticHandleData.enemy);
+            // Debug.Log(arithmeticHandleData.target);
             isEnd = true;
         }
 

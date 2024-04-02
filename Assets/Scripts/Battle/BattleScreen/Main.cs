@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 using Megumin.GameSystem;
 using Megumin.MeguminException;
+using Megumin.DataStructure;
 
 namespace Megumin.Battle
 {
@@ -13,6 +14,10 @@ namespace Megumin.Battle
         private List<LocalButton> __localDatas; 
         public override void SetUp(BattleHandleData handleData)
         {
+            _parent = Instantiate(prefab, root.transform);
+            GameObjectFind gameObjectFind = new GameObjectFind();
+            _gameObjects = gameObjectFind.FindDecendantTag(_parent, "Buttons");
+
             var list = handleData.buttons;
 
             __localDatas = new List<LocalButton>();
@@ -68,7 +73,8 @@ namespace Megumin.Battle
 
         public override void Destroy()
         {
-            _toggle.GetComponent<GameSystem.Toggle>().MoveToggle(_gameObjects[0]);
+            Destroy(_parent);
+            // _toggle.GetComponent<GameSystem.Toggle>().MoveToggle(_gameObjects[0]);
         }
     }
 }

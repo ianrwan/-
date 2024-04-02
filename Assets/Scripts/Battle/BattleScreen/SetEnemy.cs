@@ -33,7 +33,7 @@ namespace Megumin.Battle
                 SetRelativePos(__party.Amount, i);
             }
 
-            __party.enemiesObj = enemyObj;    
+            __party.EnemiesObj = enemyObj;    
             var localEnemies = GameObjectConverter.GetListGameObjComponent<LocalEnemy>(enemyObj);
 
             for(int i = 0 ; i < __party.Amount ; i++)
@@ -65,7 +65,8 @@ namespace Megumin.Battle
 
             for(int i = 0 ; i < __party.Amount ; i++)
             {
-                texts[i].text = enemies[i].name+"\nhp "+enemies[i].hp;
+                enemyObj[i].name = enemies[i].Name+"("+i+")";
+                texts[i].text = enemies[i].Name+"\nhp "+enemies[i].HP;
             }
         }
     }

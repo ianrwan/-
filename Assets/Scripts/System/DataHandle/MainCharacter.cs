@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Megumin.GameSystem
 {
-    public class LocalMainCharacter : MonoBehaviour
+    public class LocalMainCharacter : MonoBehaviour, IEntityDataGet
     {
         // no is the enum of character
         private Character no;
@@ -72,6 +72,16 @@ namespace Megumin.GameSystem
             this.hp = serializableMainCharacter.hp;
             this.speed = serializableMainCharacter.speed;
             this.tool = serializableMainCharacter.tool;
+        }
+
+        public int GetSpeed()
+        {
+            return Speed;
+        }
+
+        GameObject IEntityDataGet.GetGameObject()
+        {
+            return gameObject;
         }
     }
 

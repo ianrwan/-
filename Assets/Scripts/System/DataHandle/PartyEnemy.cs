@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Megumin.DataStructure;
+using Megumin.MeguminException;
 
 namespace Megumin.GameSystem
 {
@@ -8,7 +10,22 @@ namespace Megumin.GameSystem
     public class PartyEnemy
     {
         public List<SerializableEnemy> enemies;
-        public List<GameObject> enemiesObj;
+        private List<GameObject> enemiesObj;
+        public List<GameObject> EnemiesObj
+        {
+            get => new List<GameObject>(enemiesObj);
+            set
+            {
+                Guard guard = new Guard();
+                if(guard.IsElementMissing(value))
+                    throw new MissingGameObjectException(guard.message);
+
+                if(guard.IsNoComponent<LocalEnemy>(value))
+                    throw new NoComponentException(guard.message);
+
+                enemiesObj = new List<GameObject>(value);
+            }
+        }
 
         private int __amount;
         public int Amount

@@ -26,14 +26,14 @@ namespace Megumin.Battle
 
         // Look what's character is in action currently
         [SerializeField]
-        private GameObject currentMainCharacter;
-        public GameObject CurrentMainCharacter
+        private GameObject currentEntity;
+        public GameObject CurrentEntity
         {
             get
             {
                 try
                 {
-                    return currentMainCharacter;
+                    return currentEntity;
                 }
                 catch(NullReferenceException)
                 {
@@ -43,10 +43,10 @@ namespace Megumin.Battle
             }
             set
             {
-                if(value.GetComponent<LocalMainCharacter>() == null)
+                if(value.GetComponent<LocalMainCharacter>() == null && value.GetComponent<LocalEnemy>() == null)
                     throw new NoComponentException("LocalMainCharacter component isn't in the GameObject");
                 
-                currentMainCharacter = value;
+                currentEntity = value;
             }
         }
 

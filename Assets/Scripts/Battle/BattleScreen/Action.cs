@@ -11,12 +11,14 @@ namespace Megumin.Battle
     public class Action : BattleScreen, IGetUpperData<ButtonChoice>
     {
         private List<LocalButton> __localDatas;
+        private GameObject current;
         public ButtonChoice buttonChoice;
 
         public override void SetUp(BattleHandleData handleData)
         {
             var list = handleData.buttons;
-
+            current = handleData.CurrentEntity;
+            
             SetButtonOnCharacter();
             __localDatas = new List<LocalButton>();
 
@@ -34,7 +36,7 @@ namespace Megumin.Battle
         {
             var gameObjsChar = GameObject.FindGameObjectsWithTag("Characters");
 
-            _parent = Instantiate(prefab, gameObjsChar[0].transform); // 暫時放置角色
+            _parent = Instantiate(prefab, current.transform); // 暫時放置角色
 
             VectorHandle vectorHandle = new ChoiceVectorHandle(1);
             var vector = vectorHandle.GetVectorDatas(Path.BattleSystem.battleChoiceVector);

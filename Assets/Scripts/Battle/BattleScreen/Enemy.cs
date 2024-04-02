@@ -21,7 +21,7 @@ namespace Megumin.Battle
                 throw new SetUpException("partyEnemy in BattleHandleData doesn't set up");
 
             PartyEnemy party = handleData.partyEnemy;
-            __enemiesGameObj = party.enemiesObj;
+            __enemiesGameObj = party.EnemiesObj;
             __localEnemies = GameObjectConverter.GetListGameObjComponent<LocalEnemy>(__enemiesGameObj);
             __SetUpToggle();
             _SetUpInput();

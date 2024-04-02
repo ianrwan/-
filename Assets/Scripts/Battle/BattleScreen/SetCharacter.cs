@@ -80,6 +80,7 @@ namespace Megumin.Battle
 
             for(int i = 0 ; i < partyAmount ; i++)
             {
+                mainCharactersGObj[i].name = characters[i].Job;
                 texts[i].text = characters[i].Job+"\nhp "+characters[i].HP;
             }
         }

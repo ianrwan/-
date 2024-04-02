@@ -13,7 +13,7 @@ namespace Megumin.Battle
 
         public override void SetUp(BattleHandleData battleHandleData)
         {
-            currentMainCharacter = battleHandleData.CurrentMainCharacter;    
+            // currentMainCharacter = battleHandleData.CurrentMainCharacter;    
         }
 
         public override void ShowText()

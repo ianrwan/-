@@ -19,10 +19,12 @@ namespace Megumin.Battle
         public GameObject showExplain;
 
         private GameObject tool; // 傳回 tool 目前的資料
+        private GameObject current; // the character right now
         private TeamChoice teamChoice;
 
         public override void SetUp(BattleHandleData handleData)
         {
+            current = handleData.CurrentEntity;
             SetToolFromCharacter(handleData);
             _parent = Instantiate(prefab, root.transform);
 
@@ -36,8 +38,8 @@ namespace Megumin.Battle
 
         private void SetToolFromCharacter(BattleHandleData handleData)
         {
-            var characters = GameObject.FindGameObjectsWithTag("Characters");
-            var tools = characters[0].GetComponent<LocalMainCharacter>().Tool; // 暫時放置角色
+            // var characters = GameObject.FindGameObjectsWithTag("Characters");
+            var tools = current.GetComponent<LocalMainCharacter>().Tool; // 暫時放置角色
 
             int arraySize = tools.Length/5+1;
             serializableTools = new SerializableTool[arraySize][];
