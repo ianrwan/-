@@ -49,6 +49,54 @@ namespace Megumin.GameSystem
             }
         }
 
+        // strength is main chacrater self physical power
+        private int strength;
+        public int Strength
+        {
+            get => strength;
+            set
+            {
+                strength = value;
+                mainCharacterInfo.strength = strength;
+            }
+        }
+
+        // intelligence is main character self megical power
+        private int intelligence;
+        public int Intelligence
+        {
+            get => intelligence;
+            set
+            {
+                intelligence = value;
+                mainCharacterInfo.intelligence = intelligence;
+            }
+        }
+
+        // physicalPower is strength + equipment
+        private int physicalPower;
+        public int PhysicalPower
+        {
+            get => physicalPower;
+            set
+            {
+                physicalPower = value;
+                mainCharacterInfo.physicalPower = physicalPower;
+            }
+        }
+
+        // megicalPower is intelligence + equipment
+        private int megicalPower;
+        public int MegicalPower
+        {
+            get => megicalPower;
+            set
+            {
+                megicalPower = value;
+                mainCharacterInfo.megicalPower = megicalPower;
+            }
+        }
+
         // tool is what the character has right now
         private Tool[] tool;
         public Tool[] Tool
@@ -71,6 +119,10 @@ namespace Megumin.GameSystem
             this.job = serializableMainCharacter.job;
             this.hp = serializableMainCharacter.hp;
             this.speed = serializableMainCharacter.speed;
+            this.strength = serializableMainCharacter.strength;
+            this.intelligence = serializableMainCharacter.intelligence;
+            this.physicalPower = serializableMainCharacter.physicalPower;
+            this.megicalPower = serializableMainCharacter.megicalPower;
             this.tool = serializableMainCharacter.tool;
         }
 
@@ -92,6 +144,10 @@ namespace Megumin.GameSystem
         public string job;
         public int hp;
         public int speed;
+        public int strength;
+        public int intelligence;
+        public int physicalPower;
+        public int megicalPower;
         public Tool[] tool;
     }
 }

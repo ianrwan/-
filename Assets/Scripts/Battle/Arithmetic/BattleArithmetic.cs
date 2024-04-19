@@ -18,10 +18,10 @@ namespace Megumin.Battle
 
         public void On()
         {
-            Debug.Log("in Arithmeic"+check++);
-            // Debug.Log(arithmeticHandleData.combatChoice);
-            // Debug.Log(arithmeticHandleData.enemy);
-            // Debug.Log(arithmeticHandleData.target);
+            // Debug.Log("in Arithmeic"+check++);
+            Debug.Log(arithmeticHandleData.combatChoice);
+            Debug.Log(arithmeticHandleData.current);
+            Debug.Log(arithmeticHandleData.target);
             isEnd = true;
         }
 

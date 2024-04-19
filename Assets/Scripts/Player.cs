@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -7,34 +8,21 @@ public class Player : MonoBehaviour
     public float moveSpeed;
 
     private bool isMoving = false;
+    private bool isCollide = false;
     private Vector3 direction;
     public LayerMask layerMask;
     private Animator animator;
+    private Rigidbody2D rigidbody2D;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        rigidbody2D = GetComponent<Rigidbody2D>();    
     }
 
     public void Update()
     {
-        direction = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
-        transform.position += direction*9*moveSpeed*Time.deltaTime;
-        Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);
-        
-        var temp = direction;
-        if(direction != Vector3.zero)
-        {
-            isMoving = true;
-            PlayerAnimation(direction, isMoving);
-        }
-
-        else
-        {
-            isMoving = false;
-            PlayerAnimation(direction, isMoving);
-        }
-
+        Move(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         // direction.y = Input.GetAxisRaw("Vertical")*9;
 
         // if(direction.x != 0 && direction.y != 0)
@@ -53,7 +41,31 @@ public class Player : MonoBehaviour
         // }
     }
 
-    private void PlayerAnimation(Vector3 direction, bool isMoving)
+    private void Move(float horizontal, float vertical)
+    {
+        direction = new Vector3(horizontal, vertical, 0);
+        Vector3 movePosition = direction*9*moveSpeed*Time.fixedDeltaTime;
+
+        Vector3 currentTransformPosition = transform.position + movePosition;
+
+        rigidbody2D.MovePosition(currentTransformPosition);
+        Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);
+        
+        // set if the player is moving or not
+        // direction == (0, 0, 0) means the player doesn't move
+        if(direction == Vector3.zero)
+        {
+            isMoving = false;
+        }
+        else
+        {
+            isMoving = true;
+        }
+
+        PlayerAnimation(direction);
+    }
+
+    private void PlayerAnimation(Vector3 direction)
     {
         animator.SetBool("isMove", isMoving);
 
@@ -94,5 +106,15 @@ public class Player : MonoBehaviour
             return false;
         Debug.Log("Pass");
         return true;
+    }
+
+    private void OnCollisionStay2D(Collision2D collision2D)
+    {
+        isCollide = true;
+    }
+
+    private void OnCollisionExit2D(Collision2D collision2D)
+    {
+        isCollide = false;
     }
 }

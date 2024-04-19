@@ -50,8 +50,14 @@ namespace Megumin.Battle
         }
 
         // It will send the opsite teamchoice to teamUI, input TEAM_FRIENDLY and send in TEAM_UNFRIENDLY 
-        private void SetTeamUIReverse(TeamChoice teamChoice)
+        // teamChoice will be current teamChoice
+        private void SetTeamUIReverse(TeamChoice teamChoice, KeyBoard key)
         {
+            // Check if the input is out of the range (TEAM_UNFRIENDLY is a rightmost option)
+            if((key == KeyBoard.RIGHT && teamChoice == TeamChoice.TEAM_UNFRIENDLY) || 
+                (key == KeyBoard.LEFT && teamChoice == TeamChoice.TEAM_FRIENDLY))
+                    return;
+
             currentTeamChoice = (teamChoice == TeamChoice.TEAM_FRIENDLY) ? TeamChoice.TEAM_UNFRIENDLY : TeamChoice.TEAM_FRIENDLY;
             teamUI.SetUp(currentTeamChoice);
         }
@@ -74,11 +80,11 @@ namespace Megumin.Battle
             {
                 case KeyBoard.RIGHT:
                     root.GetComponent<SetToggle>().MoveToggle(key);
-                    SetTeamUIReverse(currentTeamChoice);
+                    SetTeamUIReverse(currentTeamChoice, key);
                     break;
                 case KeyBoard.LEFT:
                     root.GetComponent<SetToggle>().MoveToggle(key);
-                    SetTeamUIReverse(currentTeamChoice);
+                    SetTeamUIReverse(currentTeamChoice, key);
                     break;
                 case KeyBoard.UP:
                     root.GetComponent<SetToggle>().MoveToggle(key);

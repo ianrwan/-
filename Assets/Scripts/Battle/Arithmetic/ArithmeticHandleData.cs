@@ -12,8 +12,7 @@ namespace Megumin.Battle
     public class ArithmeticHandleData
     {
         public ButtonChoice combatChoice;
-        public GameObject character;
-        public GameObject enemy;
+        public GameObject current;
         public GameObject target;
 
         [Header("Tool")]

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 using Megumin.FileSystem;
 using Megumin.GameSystem;
+using System;
 
 namespace Megumin.Battle
 {
@@ -35,6 +36,11 @@ namespace Megumin.Battle
             SetUpParty();
             SetUpStatus();
             SetUpSubSystem();
+
+            // only if the current entity is enemy should do the statuschoice first means enemy attack first
+            if(speedSystem.currentEntity == Entity.ENEMY)
+                StatusChoice();
+
             SetUpScreen();
             SetUpUserInput();
         }
@@ -68,6 +74,7 @@ namespace Megumin.Battle
 
             SetUpStatus();
             SetUpScreen();
+            SetUpArithmetic();
         }
 
         public void SetUpList()
@@ -146,9 +153,7 @@ namespace Megumin.Battle
             // if current entity is enemy and go arithmetic
             if(battleHandleData.CurrentEntity.GetComponent<IEntityDataGet>() is LocalEnemy)
             {
-                Debug.Log("in enemy");
                 combatStatus = CombatStatus.ARITHMETIC;
-                
                 GoArithmetic();
             }
         }
@@ -234,7 +239,7 @@ namespace Megumin.Battle
             {
                 case ChoiceStatus.ENEMY:
                     screen = (Enemy)battleScreen;
-                    endChoice.actionClick = () => {arithmeticHandleData.enemy = screen.GetData();};
+                    endChoice.actionClick = () => {arithmeticHandleData.target = screen.GetData();};
                     endChoice.actionClick += GoArithmetic;
                     break;
                 case ChoiceStatus.ITEM:
@@ -295,6 +300,9 @@ namespace Megumin.Battle
             arithmeticHandleData = new ArithmeticHandleData();
             battleArithmetic = GetComponent<BattleArithmetic>();
             battleArithmetic.SetUp(arithmeticHandleData);
+
+            // set the current entity(Gameobject) to arithemetic
+            arithmeticHandleData.current = battleHandleData.CurrentEntity;
         }
 
         private void CheckArithmetic()

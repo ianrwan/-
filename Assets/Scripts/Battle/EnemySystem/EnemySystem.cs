@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class EnemySystem : MonoBehaviour
 {
-    
+    public void SetUp()
+    {
+        
+    }
 }
