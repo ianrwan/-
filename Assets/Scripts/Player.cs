@@ -22,7 +22,13 @@ public class Player : MonoBehaviour
 
     public void Update()
     {
-        Move(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        if(DialogueManager.instance.isDialoguePlaying)
+        {
+            StopAnimation();
+            return;
+        }
+
+        Move(InputManager.instance.movement.x, InputManager.instance.movement.y);
         // direction.y = Input.GetAxisRaw("Vertical")*9;
 
         // if(direction.x != 0 && direction.y != 0)
@@ -74,6 +80,12 @@ public class Player : MonoBehaviour
             animator.SetFloat("moveX", direction.x);
             animator.SetFloat("moveY", direction.y);
         }
+    }
+
+    private void StopAnimation()
+    {
+        isMoving = false;
+        PlayerAnimation(Vector3.zero);
     }
 
     private IEnumerator IsStop()

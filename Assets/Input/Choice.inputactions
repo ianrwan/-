@@ -1,0 +1,45 @@
+{
+    "name": "Choice",
+    "maps": [
+        {
+            "name": "UI",
+            "id": "8b8533d7-a869-4fbb-96f2-c9ac2d03ed2a",
+            "actions": [
+                {
+                    "name": "WASD",
+                    "type": "Button",
+                    "id": "b45db55d-2d5a-4483-9800-3b821c22f1e2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a49f198f-0278-40dc-9059-098a7f68eef8",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WASD",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "586ed8b2-683f-4e0d-9b92-0b49b4f4220b",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WASD",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
