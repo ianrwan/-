@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Ink.Runtime;
 using System;
-using UnityEngine.Rendering.Universal.Internal;
 
 public class DialogueChoiceManager : MonoBehaviour
 {

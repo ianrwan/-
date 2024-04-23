@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class SetToggleCurrent : MonoBehaviour
@@ -10,6 +10,13 @@ public class SetToggleCurrent : MonoBehaviour
     public GameObject toggle{get; private set;}
 
     private GameObject currentGameObject;
+
+    [Tooltip("can see toggle or not")]
+    public bool isToggleVisible = true;
+
+    [Tooltip("can image hover on the choice")]
+    public bool isImageHover = false;
+    private GameObject currentImage;
 
     private void Update()
     {
@@ -32,7 +39,26 @@ public class SetToggleCurrent : MonoBehaviour
 
         this.currentGameObject = currentGameObject;
         toggle = Instantiate(togglePrefab, currentGameObject.transform);
+
+        BoolCheck();
     }
+
+    private void BoolCheck()
+    {
+        if(!isToggleVisible)
+            toggle.GetComponent<Image>().enabled = false;
+
+        if(isImageHover)
+        {
+            // first time currentImage doesn't set
+            if(currentImage != null)
+                currentImage.SetActive(false);
+
+            int sibIndex = toggle.transform.GetSiblingIndex();
+            currentImage = toggle.transform.parent.GetChild(sibIndex-1).gameObject;
+            currentImage.SetActive(true);
+        }
+    } 
 
     public void SetToggleToNewObject(GameObject currentGameObject)
     {

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 public class DialogueTrigger : MonoBehaviour
@@ -7,14 +8,14 @@ public class DialogueTrigger : MonoBehaviour
     public bool isPlayerCollide{get; private set;}
 
     [Header("Ink Json")]
-    [SerializeField] private TextAsset inkJson;
+    [SerializeField] protected TextAsset inkJson;
 
     private void Awake()
     {
         isPlayerCollide = false;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if(!isPlayerCollide)
             return;
@@ -36,7 +37,7 @@ public class DialogueTrigger : MonoBehaviour
             isPlayerCollide = false;
     }
 
-    private void StartDialogue()
+    protected void StartDialogue()
     {
         DialogueManager.instance.EnterDialogue(inkJson);
         InputManager.instance.SetIsInteractToFalse();
