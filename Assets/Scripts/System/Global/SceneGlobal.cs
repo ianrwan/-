@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Megumin.GameSystem;
 using UnityEngine;
 
 public class SceneGlobal : MonoBehaviour
 {
-    // handel the scene where to goto after passing scene over
+    // Handel the scene where to go to after passing scene over.
     public static string goScene;
+    
+    // Handle the scene where to go to and set the player on correct position.
+    public static TransportTag transportTag;
 }

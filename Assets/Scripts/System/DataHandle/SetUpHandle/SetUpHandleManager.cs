@@ -18,7 +18,6 @@ public class SetUpHandleManager : MonoBehaviour
         {
             handleDatasSetUp[index++] = handleData.GetComponent<ISetUp>();
         }
-        
     }
 
     private void Update()

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Megumin.Scene.HeroHouse;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -22,7 +23,7 @@ public class Player : MonoBehaviour
 
     public void Update()
     {
-        if(DialogueManager.instance.isDialoguePlaying)
+        if(DialogueManager.instance.isDialoguePlaying || SpecialEventsControl.isSpecialEventStart)
         {
             StopAnimation();
             return;

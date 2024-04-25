@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Megumin.GameSystem;
-using UnityEditor.PackageManager.Requests;
 
 namespace Megumin.Battle
 {

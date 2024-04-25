@@ -60,12 +60,10 @@ public class TextAssetsManager : MonoBehaviour
     {
         if(typeStringMapJObject == null || !typeStringMapJObject.ContainsKey(name))
             return null;
-        Debug.Log("in");
         List<T> list = new List<T>();
 
         foreach(var data in typeStringMapJObject[name]["data"])
         {
-            Debug.Log(data.ToString());
             var temp = JsonConvert.DeserializeObject<T>(data.ToString());
             list.Add(temp);
         }

@@ -13,6 +13,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private Text dialogueText;
 
     public bool isDialoguePlaying{get; private set;}
+    public bool isEnd{get; private set;}
 
     private void Awake()
     {
@@ -42,6 +43,7 @@ public class DialogueManager : MonoBehaviour
     public void EnterDialogue(TextAsset inkJson)
     {
         isDialoguePlaying = true;
+        isEnd = false;
         dialoguePanel.SetActive(true);
 
         currentStroy = new Story(inkJson.text);
@@ -51,8 +53,21 @@ public class DialogueManager : MonoBehaviour
     public void ExitDialogue()
     {
         isDialoguePlaying = false;
+        isEnd = true;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
+    }
+
+    public void StopDialogue()
+    {
+        isDialoguePlaying = false;
+        dialoguePanel.SetActive(false);
+    }
+
+    public void ContinueDialogue()
+    {
+        isDialoguePlaying = true;
+        dialoguePanel.SetActive(true);
     }
 
     private void ContinueStory()
@@ -60,7 +75,9 @@ public class DialogueManager : MonoBehaviour
         if(currentStroy.canContinue)
         {
             dialogueText.text = currentStroy.Continue();
+            DialogueTagManager.instance.SetTags();
             DialogueChoiceManager.instance.DisplayChoices();
+            DialogueNameManager.instance.DisplayName();
         }
         else
         {

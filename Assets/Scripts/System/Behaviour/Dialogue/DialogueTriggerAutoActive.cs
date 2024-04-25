@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class DialogueTriggerPreface : DialogueTrigger
+// dialogue will trigger when accessing some situation without pressing
+public class DialogueTriggerAutoActive : DialogueTrigger
 {
     private bool isDialogueStart = false;
     protected override void Update()
