@@ -68,13 +68,17 @@ public class DialogueManager : MonoBehaviour
     {
         isDialoguePlaying = true;
         dialoguePanel.SetActive(true);
+        ContinueStory();
     }
 
     private void ContinueStory()
     {
+        string story = "";
         if(currentStroy.canContinue)
         {
-            dialogueText.text = currentStroy.Continue();
+            story = currentStroy.Continue();
+            dialogueText.text = (story.Trim() == "NULL") ? "" : story.Trim();
+            
             DialogueTagManager.instance.SetTags();
             DialogueChoiceManager.instance.DisplayChoices();
             DialogueNameManager.instance.DisplayName();

@@ -1,8 +1,10 @@
 VAR legend_hero_name = "小宇"
 
 （魔王小飛俠）
-（被勇者夾夾）#sound: knock #anime: black_disappear
-（輸到脫褲子）#sound: knock, knock
+NULL #sound: knock #anime: black_disappear
+（被勇者夾夾）
+NULL #sound: knock, knock
+（輸到脫褲子）
 （可以不要在我寫詩的時候找我嗎）#speaker: hero
 幹嘛
 剛剛收到一封來自王城的信 #speaker: father

@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PassingCheck : MonoBehaviour
 {
+    
     private string accessScene;
     public int secondTowait;
 
