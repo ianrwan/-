@@ -177,7 +177,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7323633148811256930, guid: 0e7303e6427879848be081699e646d90, type: 3}
       propertyPath: stage
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8254304000712533413, guid: 0e7303e6427879848be081699e646d90, type: 3}
       propertyPath: m_Name
@@ -4693,7 +4693,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 001fdb4b78d4a4d45bc0c480e9e0674a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audios: []
+  audios:
+  - name: knock
+    audioClip: {fileID: 8300000, guid: 6d466d0267c2886428eb6a49fca3c7d3, type: 3}
+    volume: 1
+    pitch: 1
+    audioSource: {fileID: 0}
+  - name: shock
+    audioClip: {fileID: 8300000, guid: 83e14ffd0b15e774399c6286e8555958, type: 3}
+    volume: 1
+    pitch: 1
+    audioSource: {fileID: 0}
 --- !u!1 &2044448781
 GameObject:
   m_ObjectHideFlags: 0

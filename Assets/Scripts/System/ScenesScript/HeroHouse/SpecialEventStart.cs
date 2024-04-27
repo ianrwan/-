@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Megumin.GameSystem;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -35,6 +36,19 @@ namespace Megumin.Scene.HeroHouse
                 DoAnime();
             }
 
+            if(DialogueTagDetector.instance.IsTagExist("sound", "knock"))
+            {
+                if(DialogueTagDetector.instance.Length > 1)
+                    TemporaryOff();
+                StartCoroutine(DoSounds());
+            }
+
+            if(DialogueTagDetector.instance.IsTagExist("sound", "shock"))
+            {
+                DialogueManager.instance.isLockedContinue = true;
+                StartCoroutine(DoSounds());
+            }
+
             if(DialogueManager.instance.isEnd)
                 EndSpecialEvent();
         }
@@ -47,6 +61,41 @@ namespace Megumin.Scene.HeroHouse
         private void DoAnime()
         {
             animator.SetBool("IsStart", true);
+        }
+
+        // Do all the sounds.
+        private IEnumerator DoSounds()
+        {
+            string sound = "";
+
+            int index = 0;
+            while((sound = DialogueTagDetector.instance.GetValue(index)) != null)
+            {
+                AudioManager.instance.Play(sound);
+                var audio = AudioManager.instance.GetAudios(sound);
+
+                yield return new WaitForSeconds(audio.AudioClip.length);
+                index++;
+            }
+
+            DialogueManager.instance.isLockedContinue = false;
+
+            if(DialogueTagDetector.instance.Length > 1)
+            {
+                TemporaryOn();
+            }
+        }
+
+        // This is a bad code, it will be replaced after making a good tag system
+        private void TemporaryOff()
+        {
+            Debug.Log("Off");
+            DialogueManager.instance.StopDialogue();
+        }
+
+        private void TemporaryOn()
+        {
+            DialogueManager.instance.ContinueDialogue();
         }
     }
 

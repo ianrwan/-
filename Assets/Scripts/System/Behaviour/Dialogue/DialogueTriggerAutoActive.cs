@@ -7,6 +7,7 @@ using UnityEngine;
 public class DialogueTriggerAutoActive : DialogueTrigger
 {
     private bool isDialogueStart = false;
+
     public void Trigger()
     {
         if(!isDialogueStart && !DialogueManager.instance.isDialoguePlaying)

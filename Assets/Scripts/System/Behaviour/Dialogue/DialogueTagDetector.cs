@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Scripting;
 
 public class DialogueTagDetector : MonoBehaviour
 {
@@ -10,6 +9,10 @@ public class DialogueTagDetector : MonoBehaviour
 
     private string detectTag;
     private string[] tagValues;
+    public int Length
+    {
+        get => tagValues.Length;
+    }
 
      private void Awake()
     {
@@ -44,5 +47,13 @@ public class DialogueTagDetector : MonoBehaviour
         {
             tagValues[index++] = anime.Trim();
         }
+    }
+
+    // If the index of the value is over and GetValue will return false
+    public string GetValue(int index)
+    {
+        if(tagValues == null || index >= tagValues.Length)
+            return null;
+        return tagValues[index];
     }
 }

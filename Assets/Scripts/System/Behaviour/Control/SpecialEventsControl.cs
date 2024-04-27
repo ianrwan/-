@@ -32,7 +32,7 @@ public abstract class SpecialEventsControl : MonoBehaviour
 
         if(triggerStage != StageHandlerGlobal.instance.stage)
             return;
-        Debug.Log("in");
+            
         if(isStartTrigger)
             SetUp();
     }

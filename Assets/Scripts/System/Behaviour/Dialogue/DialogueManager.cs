@@ -15,15 +15,16 @@ public class DialogueManager : MonoBehaviour
     public bool isDialoguePlaying{get; private set;}
     public bool isEnd{get; private set;}
 
+    // When you wanna wait for the dialogue go ahead directly and you can turn on the lock
+    [HideInInspector]
+    public bool isLockedContinue;
+
     private void Awake()
     {
         if(instance != null)
             Debug.LogWarning("It's not allowed to set multiple DialogueManager");       
         instance = this;
-    }
 
-    public void Start()
-    {
         isDialoguePlaying = false;
         dialoguePanel.SetActive(false);
     }
@@ -34,6 +35,9 @@ public class DialogueManager : MonoBehaviour
             return;
 
         if(DialogueChoiceManager.instance.isChoosing)
+            return;
+
+        if(isLockedContinue)
             return;
 
         if(InputManager.instance.isSubmit)

@@ -9,6 +9,8 @@ public class AudioManager : MonoBehaviour
     
     public void Awake()
     {
+        instance = this;
+
         if(audios == null || audios.Length == 0)
         {
             return;
@@ -25,12 +27,18 @@ public class AudioManager : MonoBehaviour
 
     public void Play(string name)
     {
+        Audio audio = GetAudios(name);
+        audio.audioSource.Play();
+    }
+
+    public Audio GetAudios(string name)
+    {
         Audio audio = Array.Find(audios, audio => audio.Name == name);
         if(audio == null)
         {
             Debug.LogWarning("Can't find the audio in the AudioManager.");
         }
 
-        audio.audioSource.Play();
+        return audio;
     }
 }
