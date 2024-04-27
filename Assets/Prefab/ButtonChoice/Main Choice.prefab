@@ -221,6 +221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
+  isOff: 0
 --- !u!1 &9151763252736072003
 GameObject:
   m_ObjectHideFlags: 0
@@ -233,7 +234,6 @@ GameObject:
   - component: {fileID: 3002947135773524836}
   - component: {fileID: 5787153356651829297}
   - component: {fileID: 8239444875368201804}
-  - component: {fileID: 1402461288985921468}
   m_Layer: 5
   m_Name: Info
   m_TagString: Buttons
@@ -317,17 +317,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   status: 0
   name: 
---- !u!114 &1402461288985921468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9151763252736072003}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4cf3a34ee8f6eb40ae48212e152e798, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  x: 0
-  y: 1

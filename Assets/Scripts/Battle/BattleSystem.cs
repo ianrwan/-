@@ -140,8 +140,8 @@ namespace Megumin.Battle
         {
             speedSystem = GetComponent<SpeedSystem>();
             speedSystem.SetUp(battleHandleData);
+           
             SetCurrentEntity();
-            
             SetUpArithmetic();
         }
 
@@ -153,6 +153,8 @@ namespace Megumin.Battle
             // if current entity is enemy and go arithmetic
             if(battleHandleData.CurrentEntity.GetComponent<IEntityDataGet>() is LocalEnemy)
             {
+                if(arithmeticHandleData != null)
+                    arithmeticHandleData.current = battleHandleData.CurrentEntity;
                 combatStatus = CombatStatus.ARITHMETIC;
                 GoArithmetic();
             }

@@ -7,7 +7,7 @@ using UnityEngine;
 public class TransportManager : MonoBehaviour, ISetUp
 {
     public static TransportManager instance{get; private set;}
-    public TagStringDictionary<TransportTag> find{get; private set;}
+    public TagDictionary<TransportTag, string> find{get; private set;}
 
     private void Awake()
     {
@@ -18,7 +18,7 @@ public class TransportManager : MonoBehaviour, ISetUp
 
     public void SetUp()
     {
-        find = new TagStringDictionary<TransportTag>("transport_scene");
+        find = new TagDictionary<TransportTag, string>("transport_scene");
         find.SetUp();
     }
 

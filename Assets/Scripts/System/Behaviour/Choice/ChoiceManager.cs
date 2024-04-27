@@ -1,74 +1,41 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class ChoiceManager : MonoBehaviour
 {
-    public static ChoiceManager instance;
+    public static ChoiceManager instance{get; private set;}
 
-    [SerializeField] private GameObject choicePanel;
-    private bool isChoosing = false;
+    [Tooltip("Input the gameobjects which is attached choiceSelectors into the manager.")]
+    [SerializeField] private ChoiceSelector[] choiceSelectors;
 
-    [Header("Choices")]
-    [SerializeField] private GameObject[] choices;
+    [Tooltip("Choose what the panel to trun on when game starts.")]
+    [SerializeField] private string startPanelName;
 
     private void Awake()
     {
         if(instance != null)
-            Debug.LogWarning("It's not allowed to set multiple ChoiceManager");
+            Debug.LogWarning("It's not allowed to set multiple DialogueChoiceManager");
         instance = this;
     }
 
-    public void Start()
+    private void Start()
     {
-        isChoosing = false;
-        choicePanel.SetActive(false);
-
-        DoChoice();
-    }
-
-    private void Update()
-    {
-        if(!isChoosing)
+        if(startPanelName == "")
             return;
+        TurnOn(startPanelName);
+    }
 
-        if(InputManager.instance.isSubmit)
+    public void TurnOn(string name)
+    {
+        var selector = Array.Find(choiceSelectors, selector => selector.Name == name);
+        if(selector == null)
         {
-            MakeChoice();
+            Debug.LogWarning("No selector calls "+name+".");
+            return;
         }
-    }
 
-    private void DoChoice()
-    {
-        isChoosing = true;
-        choicePanel.SetActive(true);
-
-        StartCoroutine(SelectFirstChoice());
-    }
-
-    private IEnumerator SelectFirstChoice()
-    {
-        // to clear the first gameobject in EventSystem and delete it
-        EventSystem.current.SetSelectedGameObject(null);
-        yield return new WaitForEndOfFrame();
-        EventSystem.current.SetSelectedGameObject(choices[0]);
-
-        // set the toggle on the first item
-        var setToggleCurrent = choicePanel.GetComponent<SetToggleCurrent>();
-        setToggleCurrent.SetToggleOnCurrent(EventSystem.current.currentSelectedGameObject);
-    }
-
-    public void MakeChoice()
-    {
-        GameObject choice = EventSystem.current.currentSelectedGameObject;
-        choice.GetComponent<TitleButton>().action.Invoke();
-        EndChoice();
-    }
-
-    public void EndChoice()
-    {
-        isChoosing = false;
-        choicePanel.SetActive(false);
+        selector.StartChoice();
     }
 }

@@ -14,6 +14,7 @@ namespace Megumin.Battle
         private List<LocalButton> __localDatas; 
         public override void SetUp(BattleHandleData handleData)
         {
+            Debug.LogWarning("Check");
             _parent = Instantiate(prefab, root.transform);
             GameObjectFind gameObjectFind = new GameObjectFind();
             _gameObjects = gameObjectFind.FindDecendantTag(_parent, "Buttons");
@@ -74,7 +75,6 @@ namespace Megumin.Battle
         public override void Destroy()
         {
             Destroy(_parent);
-            // _toggle.GetComponent<GameSystem.Toggle>().MoveToggle(_gameObjects[0]);
         }
     }
 }

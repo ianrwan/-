@@ -9,5 +9,9 @@ public interface IEntityDataGet
     
     // get speed from the entity
     public int GetSpeed();
+
+    public int GetPower();
+    public int GetDefense();
+    public int GetHealth();
     
 }

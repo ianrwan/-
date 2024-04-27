@@ -39,7 +39,7 @@ namespace Megumin.Battle
             }
 
             party.SetParty(mainCharactersGObj);
-            SetUpText();
+            // SetUpText();
         }
 
         private void SetRelativePos(int total, int tag)

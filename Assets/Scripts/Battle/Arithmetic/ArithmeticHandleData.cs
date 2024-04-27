@@ -11,6 +11,9 @@ namespace Megumin.Battle
     [Serializable]
     public class ArithmeticHandleData
     {
+        // only for main character temporary
+        public static GameObject defenseGameObject;
+
         public ButtonChoice combatChoice;
         public GameObject current;
         public GameObject target;

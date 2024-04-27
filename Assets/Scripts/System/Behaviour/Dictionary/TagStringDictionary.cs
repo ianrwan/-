@@ -5,26 +5,26 @@ using UnityEngine;
 
 namespace Megumin.GameSystem
 {
-    public class TagStringDictionary<T>
+    public class TagDictionary<T1, T2>
     {
         private List<Serialze> serialze;
-        public Dictionary<T, string> dictionary{get; private set;}
+        public Dictionary<T1, T2> dictionary{get; private set;}
 
         public string type;
 
         [Serializable]
         private class Serialze
         {
-            public T tag;
-            public string name;
+            public T1 tag;
+            public T2 name;
         }
 
-        public TagStringDictionary()
+        public TagDictionary()
         {
             Debug.LogError("You should input you string type");
         }
 
-        public TagStringDictionary(string type)
+        public TagDictionary(string type)
         {
             this.type = type;
         }
@@ -43,14 +43,14 @@ namespace Megumin.GameSystem
 
         private void SetDictionary()
         {
-            dictionary = new Dictionary<T, string>();
+            dictionary = new Dictionary<T1, T2>();
             foreach(var single in serialze)
             {
                 dictionary.Add(single.tag, single.name);
             }
         }
 
-        public string GetName(T tag)
+        public T2 GetName(T1 tag)
         {
             return dictionary[tag];
         }

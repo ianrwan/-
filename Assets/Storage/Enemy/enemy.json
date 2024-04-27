@@ -6,6 +6,9 @@
             "name": "史萊姆",
             "hp": 10,
             "speed": 100,
+            "powerMin": 1,
+            "powerMax": 3,
+            "defense": 1,
             "area":[
                 "forest", 
                 "plain"
@@ -16,6 +19,9 @@
             "name": "哥布林",
             "hp": 50,
             "speed": 10,
+            "powerMin": 2,
+            "powerMax": 4,
+            "defense": 1,
             "area":[
                 "forest",
                 "plain"
@@ -26,6 +32,9 @@
             "name": "殺人蝠",
             "hp": 50,
             "speed": 50,
+            "powerMin": 2,
+            "powerMax": 4,
+            "defense": 1,
             "area":[
                 "forest",
                 "cave"

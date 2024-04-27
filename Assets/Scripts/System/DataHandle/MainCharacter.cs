@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Megumin.GameSystem
 {
-    public class LocalMainCharacter : MonoBehaviour, IEntityDataGet
+    public class LocalMainCharacter : MonoBehaviour, IEntityDataGet, IEntityDataSet
     {
         // no is the enum of character
         private Character no;
@@ -58,6 +58,17 @@ namespace Megumin.GameSystem
             {
                 strength = value;
                 mainCharacterInfo.strength = strength;
+            }
+        }
+
+        private int defense;
+        public int Defense
+        {
+            get => defense;
+            set
+            {
+                defense = value;
+                mainCharacterInfo.defense = defense;
             }
         }
 
@@ -119,6 +130,7 @@ namespace Megumin.GameSystem
             this.job = serializableMainCharacter.job;
             this.hp = serializableMainCharacter.hp;
             this.speed = serializableMainCharacter.speed;
+            this.defense = serializableMainCharacter.defense;
             this.strength = serializableMainCharacter.strength;
             this.intelligence = serializableMainCharacter.intelligence;
             this.physicalPower = serializableMainCharacter.physicalPower;
@@ -126,7 +138,22 @@ namespace Megumin.GameSystem
             this.tool = serializableMainCharacter.tool;
         }
 
-        public int GetSpeed()
+        int IEntityDataGet.GetDefense()
+        {
+            return Defense;
+        }
+
+        int IEntityDataGet.GetHealth()
+        {
+            return HP;
+        }
+
+        int IEntityDataGet.GetPower()
+        {
+            return strength;
+        }
+
+        int IEntityDataGet.GetSpeed()
         {
             return Speed;
         }
@@ -134,6 +161,11 @@ namespace Megumin.GameSystem
         GameObject IEntityDataGet.GetGameObject()
         {
             return gameObject;
+        }
+
+        void IEntityDataSet.SetHealth(int hp)
+        {
+            HP = hp;
         }
     }
 
@@ -145,6 +177,7 @@ namespace Megumin.GameSystem
         public int hp;
         public int speed;
         public int strength;
+        public int defense;
         public int intelligence;
         public int physicalPower;
         public int megicalPower;

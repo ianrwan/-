@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Megumin.GameSystem
 {
-    public class LocalEnemy : MonoBehaviour, IEntityDataGet
+    public class LocalEnemy : MonoBehaviour, IEntityDataGet, IEntityDataSet
     {
         // The enum symbol of the enemy, like "ENEMY_SLIME"
         private Enemy symbol;
@@ -37,6 +37,39 @@ namespace Megumin.GameSystem
             }
         }
 
+        private int defense;
+        public int Defense
+        {
+            get => defense;
+            set
+            {
+                defense = value;
+                enemy.defense = defense;
+            }
+        }
+
+        private int powerMin;
+        public int PowerMin
+        {
+            get => powerMin;
+            set
+            {
+                powerMin = value;
+                enemy.powerMin = powerMin;
+            }
+        }
+
+        private int powerMax;
+        public int PowerMax
+        {
+            get => powerMax;
+            set
+            {
+                powerMax = value;
+                enemy.powerMax = powerMax;
+            }
+        }
+
         private int speed;
         public int Speed
         {
@@ -62,6 +95,9 @@ namespace Megumin.GameSystem
             symbol = enemy.symbol;
             name = enemy.name;
             hp = enemy.hp;
+            defense = enemy.defense;
+            powerMin = enemy.powerMin;
+            powerMax = enemy.powerMax;
             speed = enemy.speed;
             area = enemy.area;
         }
@@ -71,9 +107,29 @@ namespace Megumin.GameSystem
             return Speed;
         }
 
+        int IEntityDataGet.GetDefense()
+        {
+            return Defense;
+        }
+
+        int IEntityDataGet.GetHealth()
+        {
+            return hp;
+        }
+
+        int IEntityDataGet.GetPower()
+        {
+            return UnityEngine.Random.Range(powerMin, powerMax+1);
+        }
+
         GameObject IEntityDataGet.GetGameObject()
         {
             return gameObject;
+        }
+
+        void IEntityDataSet.SetHealth(int hp)
+        {
+            HP = hp;
         }
     }
 
@@ -82,6 +138,9 @@ namespace Megumin.GameSystem
         public Enemy symbol;
         public string name;
         public int hp;
+        public int powerMin;
+        public int powerMax;
+        public int defense;
         public int speed;
         public string[] area;
     }
