@@ -60,13 +60,14 @@ namespace Megumin.Battle
         // 以下為暫時使用，之後會變更
         public void SetUpText()
         {
-            var texts = GameObjectConverter.GetListGameObjComponent<Text>(enemyObj);
+            // var texts = GameObjectConverter.GetListGameObjComponent<Text>(enemyObj);
             var enemies = GameObjectConverter.GetListGameObjComponent<LocalEnemy>(enemyObj);
 
             for(int i = 0 ; i < __party.Amount ; i++)
             {
                 enemyObj[i].name = enemies[i].Name+"("+i+")";
-                texts[i].text = enemies[i].Name+"\nhp "+enemies[i].HP;
+                enemyObj[i].transform.GetChild(1).GetComponent<Text>().text = enemyObj[i].name;
+                // texts[i].text = enemies[i].Name+"\nhp "+enemies[i].HP;
             }
         }
     }

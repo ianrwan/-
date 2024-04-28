@@ -30,8 +30,17 @@ namespace Megumin.Battle
 
         private Stack<ChoiceStatus> choiceStatusStack;
 
+        private bool isSetUpStart;
+
+        private void Awake()
+        {
+            isSetUpStart = false;
+        }
+
         public void Start()
         {
+            SceneLoad.instance.LoadScene("BattleDialogue");
+
             SetUpList();
             SetUpParty();
             SetUpStatus();
@@ -41,12 +50,23 @@ namespace Megumin.Battle
             if(speedSystem.currentEntity == Entity.ENEMY)
                 StatusChoice();
 
+            StartCoroutine(WaitForSetUp());
+        }
+
+        private IEnumerator WaitForSetUp()
+        {
+            yield return new WaitForSeconds(2);
+            yield return new WaitUntil(() => !SceneLoad.instance.isSceneLoad);
             SetUpScreen();
             SetUpUserInput();
+            isSetUpStart = true;
         }
 
         public void Update()
         {
+            if(!isSetUpStart)
+                return;
+                
             userInputNum = userInput.HandleUpdate();
             UserInputCheck();
             CheckArithmetic();
@@ -76,6 +96,12 @@ namespace Megumin.Battle
             SetUpScreen();
             SetUpArithmetic();
         }
+
+        // private IEnumerator WaitChoice()
+        // {
+        //     yield return new WaitForSeconds(2);
+        //     StatusChoice();
+        // }
 
         public void SetUpList()
         {
@@ -165,6 +191,7 @@ namespace Megumin.Battle
             if(speedSystem.Amount != 0)
                 return false;
 
+            battleHandleData.party.GetPartyGameObjets()[0].GetComponent<Animator>().SetBool("isDefense", false); // very bad code
             speedSystem.SetUp(battleHandleData);
             return true;
         }
@@ -307,7 +334,7 @@ namespace Megumin.Battle
             arithmeticHandleData.current = battleHandleData.CurrentEntity;
         }
 
-        private void CheckArithmetic()
+        public void CheckArithmetic()
         {
         
             if(combatStatus != CombatStatus.ARITHMETIC)

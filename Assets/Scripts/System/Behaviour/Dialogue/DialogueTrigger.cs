@@ -10,6 +10,9 @@ public class DialogueTrigger : MonoBehaviour
     [Header("Ink Json")]
     [SerializeField] protected TextAsset inkJson;
 
+    [Tooltip("To input the knot name.")]
+    public string knotName;
+
     private void Awake()
     {
         isPlayerCollide = false;
@@ -39,7 +42,10 @@ public class DialogueTrigger : MonoBehaviour
 
     protected void StartDialogue()
     {
-        DialogueManager.instance.EnterDialogue(inkJson);
+        if(knotName != null)
+            DialogueManager.instance.EnterDialogue(inkJson, knotName);
+        else
+            DialogueManager.instance.EnterDialogue(inkJson);
         InputManager.instance.SetIsInteractToFalse();
     }
 }

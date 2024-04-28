@@ -54,6 +54,17 @@ public class DialogueManager : MonoBehaviour
         ContinueStory();
     }
 
+    public void EnterDialogue(TextAsset inkJson, string knot)
+    {
+        isDialoguePlaying = true;
+        isEnd = false;
+        dialoguePanel.SetActive(true);
+
+        currentStroy = new Story(inkJson.text);
+        currentStroy.ChoosePathString(knot);
+        ContinueStory();
+    }
+
     public void ExitDialogue()
     {
         isDialoguePlaying = false;

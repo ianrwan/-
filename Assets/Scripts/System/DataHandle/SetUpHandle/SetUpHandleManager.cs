@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class SetUpHandleManager : MonoBehaviour
 {
+    public static SetUpHandleManager instance{get; private set;}
+
     [SerializeField] private GameObject[] handleDatas;
     private ISetUp[] handleDatasSetUp;
-    private bool isCompleteSetUpOnStart;
+    public bool isCompleteSetUpOnStart{get; private set;}
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {

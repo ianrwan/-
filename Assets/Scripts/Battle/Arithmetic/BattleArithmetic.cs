@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Megumin.GameSystem;
-using Unity.PlasticSCM.Editor.WebApi;
-using JetBrains.Annotations;
+using UnityEngine.UI;
 
 namespace Megumin.Battle
 {
@@ -12,25 +11,52 @@ namespace Megumin.Battle
         public ArithmeticHandleData handleData{get; private set;}
         public bool isEnd{get; private set;}
 
+        private bool isFinished;
+
         public void SetUp(ArithmeticHandleData handleData)
         {
             this.handleData = handleData;    
         }
 
+        private void Update()
+        {
+            if(isEnd)
+                return;
+
+            if(!ArithmeticAnimation.instance.isAnimationEnd)
+                return;
+
+            if(DeadArithmetic.instance.isDead)
+                return;
+
+            if(RetreatArithmetic.instance.isRetreat)
+                return;
+
+            StartCoroutine(WaitForEnd());
+        }
+
+        private IEnumerator WaitForEnd()
+        {
+            isEnd = true;
+            isFinished = false;
+            yield return new WaitForSeconds(0.5f);
+        }
+
         public void On()
         {
+            isEnd = false;
             EnemyCheck();
             PlayerDefenseCheck();
-            ArithmeticAnimation.instance.SetUp();
 
             StatusChoice();
+            DeadArithmetic.instance.On();
 
             // Debug.Log("in Arithmeic"+check++);
             Debug.Log("Action: "+handleData.combatChoice);
             Debug.Log("Current: "+handleData.current);
             Debug.Log("Target: "+handleData.target);
             
-            isEnd = true;
+            isFinished = true;
         }
 
         private void EnemyCheck()
@@ -46,8 +72,9 @@ namespace Megumin.Battle
         {
             if(handleData.current.tag == "Characters")
             {
+                Debug.Log("in");
                 ArithmeticHandleData.defenseGameObject = null;
-                ArithmeticAnimation.instance.SetUp();
+                ArithmeticAnimation.instance.SetUp(handleData.current);
                 ArithmeticAnimation.instance.Defense(false);
             }
         }
@@ -61,6 +88,9 @@ namespace Megumin.Battle
                     break;
                 case ButtonChoice.BATTLE_DEFENCE:
                     DefenseArithmetic.instance.On();
+                    break;
+                case ButtonChoice.BATTLE_RETREAT:
+                    RetreatArithmetic.instance.On();
                     break;
             }
         }

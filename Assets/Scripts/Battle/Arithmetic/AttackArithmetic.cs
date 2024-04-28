@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Megumin.Battle;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Megumin.Battle
 {
@@ -17,6 +18,8 @@ namespace Megumin.Battle
         private IEntityDataGet targetGet;
         private IEntityDataSet targetSet;
 
+        private int hurt;
+
         private void Awake()
         {
             instance = this;
@@ -29,13 +32,26 @@ namespace Megumin.Battle
             targetSet = battleArithmetic.handleData.target.GetComponent<IEntityDataSet>();
 
             Calculate();
+            DoAnimation();
         }
 
         private void Calculate()
         {
-            var hp = targetGet.GetHealth()-currentGet.GetPower()+TemporaryDefenseCheck();
+            hurt = currentGet.GetPower()-TemporaryDefenseCheck();
+            var hp = targetGet.GetHealth()-hurt;
             targetSet.SetHealth(hp);
         }
+
+        private void DoAnimation()
+        {
+            ArithmeticAnimation.instance.SetUp(targetGet.GetGameObject());
+            ArithmeticAnimation.instance.Hurt(true);
+
+            targetGet.GetGameObject().GetComponentInChildren<Text>().text = hurt+"";
+            ArithmeticAnimation.instance.ExitText(battleArithmetic.handleData.target.GetComponentInChildren<Text>());
+        }
+
+        
 
         // bad code only for temp
         private int TemporaryDefenseCheck()
@@ -50,7 +66,6 @@ namespace Megumin.Battle
             Debug.Log("In defense");
             return targetGet.GetDefense();
         }
-
 
     }
 }

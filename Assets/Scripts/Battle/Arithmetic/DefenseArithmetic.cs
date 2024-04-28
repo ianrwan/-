@@ -20,6 +20,7 @@ namespace Megumin.Battle
         public void On()
         {
             ArithmeticHandleData.defenseGameObject = battleArithmetic.handleData.current;
+            ArithmeticAnimation.instance.SetUp(ArithmeticHandleData.defenseGameObject);
             ArithmeticAnimation.instance.Defense(true);
         }
 
