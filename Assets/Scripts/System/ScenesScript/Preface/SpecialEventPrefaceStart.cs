@@ -23,7 +23,6 @@ namespace Megumin.Scene.Preface
 
         protected override void EndEvent()
         {
-            Debug.Log("in3");
             SceneManager.LoadScene("主角家");
         }
 

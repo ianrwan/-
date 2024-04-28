@@ -9,6 +9,9 @@ public class StageHandlerGlobal : MonoBehaviour
     
     [Tooltip("Handle what the stage is in current.")]
     public Stage stage;
+    public FlowerMissionStage flowerMissionStage;
+    
+    public bool isCompleteBattleFirst;
 
     public void Awake()
     {

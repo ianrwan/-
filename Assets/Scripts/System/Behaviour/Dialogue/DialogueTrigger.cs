@@ -42,7 +42,7 @@ public class DialogueTrigger : MonoBehaviour
 
     protected void StartDialogue()
     {
-        if(knotName != null)
+        if(knotName != null && knotName != "")
             DialogueManager.instance.EnterDialogue(inkJson, knotName);
         else
             DialogueManager.instance.EnterDialogue(inkJson);

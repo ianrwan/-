@@ -38,11 +38,30 @@ public class DialogueNameManager : MonoBehaviour
 
     public void DisplayName()
     {
+        if(DialogueTagManager.instance.GetTagValue("namepanel") != null)
+            PanelSetting();
+
         if(DialogueTagManager.instance.GetTagValue("speaker") == null)
             return;
 
         TurnOnPanel();
         nameText.text = DialogueCharacters.dialogueChatactersDictionary[DialogueTagManager.instance.GetTagValue("speaker")];
+    }
+
+    public void PanelSetting()
+    {
+        switch(DialogueTagManager.instance.GetTagValue("namepanel"))
+        {
+            case "off":
+                TurnOffPanel();
+                break;
+            case "on":
+                TurnOnPanel();
+                break;
+            default:
+                Debug.LogWarning("Panel setting value is incorrect.");
+                break;
+        }
     }
 
     private void TurnOnPanel()
