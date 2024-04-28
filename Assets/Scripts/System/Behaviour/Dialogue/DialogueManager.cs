@@ -92,6 +92,12 @@ public class DialogueManager : MonoBehaviour
         if(currentStroy.canContinue)
         {
             story = currentStroy.Continue();
+            if(story.Trim() == "")
+            {
+                ContinueStory();
+                return;
+            }
+
             dialogueText.text = (story.Trim() == "NULL") ? "" : story.Trim();
             
             DialogueTagManager.instance.SetTags();

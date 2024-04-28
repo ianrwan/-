@@ -23,8 +23,6 @@ public class FlowerSystem : MonoBehaviour
             StageHandlerGlobal.instance.flowerMissionStage = FlowerMissionStage.PROCEED;
             Choise();
         }
-
-        
     }
 
     private void Choise()

@@ -27,7 +27,7 @@
 
 ===mission_1_complete===
 謝謝你幫我採花，這個蜂蜜就送你吧 #speaker: npc_village_1
-你得到了一個蜂蜜 #namepanel: off
+勇者獲得了一個蜂蜜 #namepanel: off
 ->END
 
 ===mission_1_finish===

@@ -12,6 +12,8 @@ public class StageHandlerGlobal : MonoBehaviour
     public FlowerMissionStage flowerMissionStage;
     
     public bool isCompleteBattleFirst;
+    
+    public bool isKingSpeakOver;
 
     public void Awake()
     {

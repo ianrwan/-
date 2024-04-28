@@ -51,6 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialoguePanel: {fileID: 4740974599654705838}
   dialogueText: {fileID: 9150093820416197958}
+  isLockedContinue: 0
 --- !u!114 &702398521203913753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,6 +242,10 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6610080606823227842, guid: d5bfd056111133d4f8d6fefe2223cc37, type: 3}
+      propertyPath: togglePrefab
+      value: 
+      objectReference: {fileID: 8374687607893223900, guid: abca7b48587cde34ba8fd24eb1ad7a91, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
