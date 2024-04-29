@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Megumin.GameSystem;
-using UnityEditor.EditorTools;
 
 // If you need to set the crossing scenes spawn point you can use this behaviour
 public class SpawnPoint : MonoBehaviour

@@ -12,6 +12,9 @@ public class TransportTrigger : MonoBehaviour
     [Tooltip("Check if trigger will happen or not.")]
     public bool isLock = false;
 
+    [Tooltip("Unlock until stage turn pass.")]
+    public Stage until;
+
     [Tooltip("Check if go to the scene PassingBlack first.")]
     public bool isGoPassingBlack = false;
 
@@ -22,6 +25,18 @@ public class TransportTrigger : MonoBehaviour
     {
         if(isGoPassingBlack && isGoPassing)
             Debug.LogWarning("isGoPassingBlack and isGoPassing shouldn't be both true.");
+    }
+
+    public void Update()
+    {
+        if(until == Stage.FIRST_START)
+            return;
+            
+        if(isLock == true)
+        {
+            if(StageHandlerGlobal.instance.stage == until)
+                isLock = false;
+        }
     }
 
     public void OnTriggerEnter2D(Collider2D collider2D)

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using Megumin.FileSystem;
 using Megumin.GameSystem;
 using System;
+using Megumin.Scene.BattleDialogue;
 
 namespace Megumin.Battle
 {
@@ -39,8 +40,6 @@ namespace Megumin.Battle
 
         public void Start()
         {
-            SceneLoad.instance.LoadScene("BattleDialogue");
-
             SetUpList();
             SetUpParty();
             SetUpStatus();
@@ -56,7 +55,7 @@ namespace Megumin.Battle
         private IEnumerator WaitForSetUp()
         {
             yield return new WaitForSeconds(2);
-            yield return new WaitUntil(() => !SceneLoad.instance.isSceneLoad);
+            yield return new WaitUntil(() => !SpecialEventsControl.isSpecialEventStart || StageHandlerGlobal.instance.isFirstBattleOver);
             SetUpScreen();
             SetUpUserInput();
             isSetUpStart = true;

@@ -16,4 +16,13 @@ public class DialogueTriggerAutoActive : DialogueTrigger
             StartDialogue();
         }
     }
+
+    public void TriggerMutipleTime()
+    {
+        if(!DialogueManager.instance.isDialoguePlaying)
+        {
+            isDialogueStart = true;
+            StartDialogue();
+        }
+    }
 }

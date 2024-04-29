@@ -25,8 +25,14 @@ namespace Megumin.Battle
         public override void SetUp(BattleHandleData handleData)
         {
             current = handleData.CurrentEntity;
-            SetToolFromCharacter(handleData);
+            if(handleData.party.GetPartyGameObjets()[0].GetComponent<LocalMainCharacter>().Tool != null)
+                SetToolFromCharacter(handleData);
             _parent = Instantiate(prefab, root.transform);
+
+            if(handleData.party.GetPartyGameObjets()[0].GetComponent<LocalMainCharacter>().Tool == null)
+            {
+                return;
+            }
 
             GameObjectFind gameObjectFind = new GameObjectFind();
             choiceParent = gameObjectFind.FindDecendantTag(_parent, "Selector")[0];

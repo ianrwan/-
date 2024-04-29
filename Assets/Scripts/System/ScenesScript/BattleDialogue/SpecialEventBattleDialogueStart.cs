@@ -2,15 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Megumin.Scene.BattleDialogue
 {
     public class SpecialEventBattleDialogueStart : SpecialEventsControl
     {
         private DialogueTriggerAutoActive dialogueTrigger;
+        public GameObject dialogueGameObject;
 
         protected override void StartEvent()
         {
+            if(StageHandlerGlobal.instance.isFirstBattleOver == true)
+            {
+                EndSpecialEvent();
+                return;
+            }
+                
             dialogueTrigger = GetComponent<DialogueTriggerAutoActive>();
             StartCoroutine(Wait());  
         }
@@ -19,7 +27,7 @@ namespace Megumin.Scene.BattleDialogue
         private IEnumerator Wait()
         {
             yield return new WaitUntil(() => SetUpHandleManager.instance.isCompleteSetUpOnStart);
-            dialogueTrigger.Trigger();
+            dialogueTrigger.TriggerMutipleTime();
         }
 
         protected override void DetectEvent()
@@ -30,7 +38,8 @@ namespace Megumin.Scene.BattleDialogue
 
         protected override void EndEvent()
         {
-            SceneLoad.instance.DeleteScene("BattleDialogue");
+            StageHandlerGlobal.instance.isFirstBattleOver = true;
+            dialogueGameObject.SetActive(false);
         }
     }
 }

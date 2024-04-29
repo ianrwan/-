@@ -23,6 +23,9 @@ namespace Megumin.Battle
             if(isEnd)
                 return;
 
+            if(handleData.combatChoice == ButtonChoice.BATTLE_ITEM)
+                return;            
+
             if(!ArithmeticAnimation.instance.isAnimationEnd)
                 return;
 
@@ -44,11 +47,15 @@ namespace Megumin.Battle
 
         public void On()
         {
+            
+            
             isEnd = false;
             EnemyCheck();
             PlayerDefenseCheck();
 
             StatusChoice();
+            if(handleData.combatChoice == ButtonChoice.BATTLE_ITEM)
+                return;
             DeadArithmetic.instance.On();
 
             // Debug.Log("in Arithmeic"+check++);
@@ -91,6 +98,9 @@ namespace Megumin.Battle
                     break;
                 case ButtonChoice.BATTLE_RETREAT:
                     RetreatArithmetic.instance.On();
+                    break;
+                case ButtonChoice.BATTLE_ITEM:
+                    ItemArithmetic.instance.On();
                     break;
             }
         }

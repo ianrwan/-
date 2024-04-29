@@ -51,13 +51,17 @@ public abstract class SpecialEventsControl : MonoBehaviour
 
     public void EndSpecialEvent()
     {
-        isSpecialEventStart = false;
-
         if(isEndChangeStage == true)
         {
             StageHandlerGlobal.instance.stage = nextStage;
         }
 
+        isSpecialEventStart = false;
         EndEvent();
+    }
+
+    public static void Reset()
+    {
+        isSpecialEventStart = false;
     }
 }

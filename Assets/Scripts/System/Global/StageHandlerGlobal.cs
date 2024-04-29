@@ -15,10 +15,23 @@ public class StageHandlerGlobal : MonoBehaviour
     
     public bool isKingSpeakOver;
 
+    public bool isFirstBattleOver;
+    public bool isFirstShockOver;
+
     public void Awake()
     {
         if(instance != null)
             return;
         instance = this;
+    }
+
+    public void Init()
+    {
+        stage = Stage.FIRST_START;
+        flowerMissionStage = FlowerMissionStage.LOCKED;
+        isCompleteBattleFirst = false;
+        isKingSpeakOver = false;
+        isFirstBattleOver = false;
+        isFirstShockOver = false;
     }
 }

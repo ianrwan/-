@@ -135,7 +135,12 @@ namespace Megumin.GameSystem
             this.intelligence = serializableMainCharacter.intelligence;
             this.physicalPower = serializableMainCharacter.physicalPower;
             this.megicalPower = serializableMainCharacter.megicalPower;
-            this.tool = serializableMainCharacter.tool;
+            // this.tool = serializableMainCharacter.tool;
+            if(StageHandlerGlobal.instance.flowerMissionStage == FlowerMissionStage.FINISH)
+            {
+                this.tool = new Tool[1];
+                this.tool[0] = GameSystem.Tool.TOOL_HONEY;
+            }
         }
 
         int IEntityDataGet.GetDefense()

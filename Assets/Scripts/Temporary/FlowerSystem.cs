@@ -7,8 +7,14 @@ using UnityEngine;
 
 public class FlowerSystem : MonoBehaviour
 {
+    public static FlowerSystem instance;
     [SerializeField] public GameObject flowerPerson;
     private DialogueTrigger dialogueTrigger;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {
@@ -25,7 +31,7 @@ public class FlowerSystem : MonoBehaviour
         }
     }
 
-    private void Choise()
+    public void Choise()
     {
         switch(StageHandlerGlobal.instance.flowerMissionStage)
         {

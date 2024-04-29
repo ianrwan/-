@@ -17,7 +17,7 @@ public class SceneLoad : MonoBehaviour
 
     public void LoadScene(string name)
     {
-        SceneManager.LoadScene(name, LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync(name, LoadSceneMode.Additive);
         isSceneLoad = true;
     }
 
