@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Megumin.Battle
 {
@@ -38,6 +39,15 @@ namespace Megumin.Battle
             isDead = true;
             ArithmeticAnimation.instance.SetUp(targetGet.GetGameObject());
             ArithmeticAnimation.instance.Dead(true);
+            
+            StartCoroutine(Wait());
+        }
+
+        private IEnumerator Wait()
+        {
+            yield return new WaitForSeconds(3);
+            SceneGlobal.goScene = "Title";
+            SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
         }
     }
 }

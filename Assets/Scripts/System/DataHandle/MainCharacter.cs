@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Megumin.GameSystem
@@ -128,7 +129,8 @@ namespace Megumin.GameSystem
             mainCharacterInfo = serializableMainCharacter;
             this.no = serializableMainCharacter.no;
             this.job = serializableMainCharacter.job;
-            this.hp = serializableMainCharacter.hp;
+            // this.hp = serializableMainCharacter.hp;
+            hp = StageHandlerGlobal.instance.health;
             this.speed = serializableMainCharacter.speed;
             this.defense = serializableMainCharacter.defense;
             this.strength = serializableMainCharacter.strength;

@@ -11,11 +11,11 @@ public class FlowerTrigger : MonoBehaviour
 
     protected virtual void Update()
     {
-        if(!isPlayerCollide)
-            return;
+        // if(!isPlayerCollide)
+        //     return;
 
-        if(InputManager.instance.isInteract && !DialogueManager.instance.isDialoguePlaying)
-            StartFlower();
+        // if(InputManager.instance.isInteract)
+        //     StartFlower();
     }
 
 
@@ -44,7 +44,7 @@ public class FlowerTrigger : MonoBehaviour
 
     private IEnumerator Wait()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1);
         FlowerSystem.instance.Choise();
     }
 }

@@ -18,6 +18,8 @@ public class StageHandlerGlobal : MonoBehaviour
     public bool isFirstBattleOver;
     public bool isFirstShockOver;
 
+    public int health = 10;
+
     public void Awake()
     {
         if(instance != null)
@@ -33,5 +35,6 @@ public class StageHandlerGlobal : MonoBehaviour
         isKingSpeakOver = false;
         isFirstBattleOver = false;
         isFirstShockOver = false;
+        health = 10;
     }
 }

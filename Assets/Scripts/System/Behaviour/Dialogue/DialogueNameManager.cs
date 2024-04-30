@@ -9,6 +9,12 @@ public class DialogueNameManager : MonoBehaviour
     [SerializeField] private GameObject namePanel;
     [SerializeField] private Text nameText;
 
+    // temp
+    [SerializeField] private GameObject tempPortraiPanel;
+    [SerializeField] private GameObject hero;
+    [SerializeField] private GameObject warrior;
+    // temp
+
     public bool isNameOn;
 
     private void Awake()
@@ -25,6 +31,12 @@ public class DialogueNameManager : MonoBehaviour
 
         isNameOn = false;
         namePanel.SetActive(false);
+
+        // temp
+        hero.SetActive(false);
+        warrior.SetActive(false);
+        tempPortraiPanel.SetActive(false);
+        // temp
     }
 
     private void Update()
@@ -45,6 +57,28 @@ public class DialogueNameManager : MonoBehaviour
             return;
 
         TurnOnPanel();
+
+        // temp
+        if(DialogueTagManager.instance.GetTagValue("speaker") == "hero")
+        {
+            tempPortraiPanel.SetActive(true);
+            hero.SetActive(true);
+            warrior.SetActive(false);
+        }
+        else if(DialogueTagManager.instance.GetTagValue("speaker") == "warrior")
+        {
+            tempPortraiPanel.SetActive(true);
+            warrior.SetActive(true);
+            hero.SetActive(false);
+        }
+        else
+        {
+            tempPortraiPanel.SetActive(false);
+            warrior.SetActive(false);
+            hero.SetActive(false);
+        }
+        // temp
+
         nameText.text = DialogueCharacters.dialogueChatactersDictionary[DialogueTagManager.instance.GetTagValue("speaker")];
     }
 
@@ -76,5 +110,11 @@ public class DialogueNameManager : MonoBehaviour
     {
         isNameOn = false;
         namePanel.SetActive(false);
+
+        // temp
+        tempPortraiPanel.SetActive(false);
+        warrior.SetActive(false);
+        hero.SetActive(false);
+        // temp
     }
 }

@@ -19,8 +19,9 @@ public class CharacterInfo : MonoBehaviour
     {
         if(battleSystem.battleHandleData.party != null)
         {
-            string currentHP = battleSystem.battleHandleData.party.GetPartyGameObjets()[0].GetComponent<LocalMainCharacter>().HP+"";
+            int currentHP =  battleSystem.battleHandleData.party.GetPartyGameObjets()[0].GetComponent<LocalMainCharacter>().HP;
             hpText.text = "HP "+currentHP+" / 10";
+            StageHandlerGlobal.instance.health = currentHP;
         }
             
     }

@@ -10,6 +10,7 @@ namespace Megumin.GameSystem
         CASTEL_YARD_HERO_VILLAGE,
         CASTEL_YARD_CASTEL,
         CASTEL_CASTEL_YARD,
-        VILLAGE_WILD_HERO_VILLAGE
+        VILLAGE_WILD_HERO_VILLAGE,
+        HERO_HOME_START,
     }
 }

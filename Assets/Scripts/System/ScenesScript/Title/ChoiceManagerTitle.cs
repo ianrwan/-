@@ -13,6 +13,6 @@ public class ChoiceManagerTitle : MonoBehaviour
 
     public void Quit()
     {
-
+        Application.Quit();
     }
 }

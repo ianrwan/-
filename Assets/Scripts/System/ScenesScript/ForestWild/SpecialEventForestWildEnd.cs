@@ -14,7 +14,9 @@ public class SpecialEventForestWildEnd : SpecialEventsControl
 
     private IEnumerator Wait()
     {
+        Debug.Log("in one");
         yield return new WaitUntil(() => SetUpHandleManager.instance.isCompleteSetUpOnStart);
+        Debug.Log("in two");
         dialogueTrigger = GetComponent<DialogueTriggerAutoActive>();
         dialogueTrigger.Trigger();  
     }

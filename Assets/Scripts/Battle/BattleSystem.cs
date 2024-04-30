@@ -40,6 +40,7 @@ namespace Megumin.Battle
 
         public void Start()
         {
+            AudioManager.instance.Play("battle");
             SetUpList();
             SetUpParty();
             SetUpStatus();
@@ -58,6 +59,7 @@ namespace Megumin.Battle
             yield return new WaitUntil(() => !SpecialEventsControl.isSpecialEventStart || StageHandlerGlobal.instance.isFirstBattleOver);
             SetUpScreen();
             SetUpUserInput();
+            AudioManager.instance.Play("battle_start");
             isSetUpStart = true;
         }
 
@@ -91,6 +93,7 @@ namespace Megumin.Battle
                 return;
             }
 
+            AudioManager.instance.Play("battle_start");
             SetUpStatus();
             SetUpScreen();
             SetUpArithmetic();

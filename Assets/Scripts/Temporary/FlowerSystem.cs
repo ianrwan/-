@@ -24,11 +24,35 @@ public class FlowerSystem : MonoBehaviour
 
     private void Update()
     {
+        if(StageHandlerGlobal.instance.flowerMissionStage == FlowerMissionStage.OPEN)
+        {
+            ToProceed();
+        }
+
+        if(StageHandlerGlobal.instance.flowerMissionStage == FlowerMissionStage.COMPLETE)
+        {
+            ToFinish();
+        }
+    }
+
+    private void ToProceed()
+    {
         if(DialogueTagDetector.instance.IsTagExist("mission", "get_flower"))
         {
             StageHandlerGlobal.instance.flowerMissionStage = FlowerMissionStage.PROCEED;
             Choise();
         }
+
+    }
+
+    private void ToFinish()
+    {
+        if(DialogueTagDetector.instance.IsTagExist("mission", "get_flower"))
+        {
+            StageHandlerGlobal.instance.flowerMissionStage = FlowerMissionStage.FINISH;
+            Choise();
+        }
+
     }
 
     public void Choise()

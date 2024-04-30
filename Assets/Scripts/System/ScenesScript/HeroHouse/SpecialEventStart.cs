@@ -22,6 +22,12 @@ namespace Megumin.Scene.HeroHouse
             Camera.main.transform.position = new Vector3(playerVector2.x, playerVector2.y, Camera.main.transform.position.z);
 
             dialogueTrigger = GetComponent<DialogueTriggerAutoActive>();
+            StartCoroutine(Wait());
+        }
+
+        private IEnumerator Wait()
+        {
+            yield return new WaitForSeconds(2);
             dialogueTrigger.Trigger();
         }
 
@@ -74,7 +80,7 @@ namespace Megumin.Scene.HeroHouse
                 AudioManager.instance.Play(sound);
                 var audio = AudioManager.instance.GetAudios(sound);
 
-                yield return new WaitForSeconds(audio.AudioClip.length);
+                yield return new WaitForSeconds(audio.audioSource.clip.length);
                 index++;
             }
 

@@ -1,6 +1,7 @@
 using System;
 using Megumin.GameSystem;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -11,24 +12,31 @@ public class AudioManager : MonoBehaviour
     {
         instance = this;
 
-        if(audios == null || audios.Length == 0)
-        {
-            return;
-        }
+        // if(audios == null || audios.Length == 0)
+        // {
+        //     return;
+        // }
 
-        foreach(var audio in audios)
-        {
-            audio.audioSource = gameObject.AddComponent<AudioSource>();
-            audio.audioSource.clip = audio.AudioClip;
-            audio.audioSource.volume = audio.volume;
-            audio.audioSource.pitch = audio.pitch;
-        }
+        // foreach(var audio in audios)
+        // {
+        //     audio.audioSource = gameObject.AddComponent<AudioSource>();
+        //     audio.audioSource.clip = audio.AudioClip;
+        //     audio.audioSource.volume = audio.volume;
+        //     audio.audioSource.pitch = audio.pitch;
+        // }
     }
 
     public void Play(string name)
     {
         Audio audio = GetAudios(name);
-        audio.audioSource.Play();
+        if(audio.audioSource.isPlaying == false)
+            audio.audioSource.Play();
+    }
+
+    public void Stop(string name)
+    {
+        Audio audio = GetAudios(name);
+        audio.audioSource.Stop();
     }
 
     public Audio GetAudios(string name)

@@ -47,6 +47,11 @@ namespace Megumin.Battle
             ArithmeticAnimation.instance.SetUp(targetGet.GetGameObject());
             ArithmeticAnimation.instance.Hurt(true);
 
+            // if(targetGet.GetGameObject().tag == "Enemies")
+            // {
+            //     targetGet.GetGameObject().GetComponentInChildren<Text>().text = hurt+"";
+            //     ArithmeticAnimation.instance.ExitText(battleArithmetic.handleData.target.GetComponentInChildren<Text>());
+            // }
             targetGet.GetGameObject().GetComponentInChildren<Text>().text = hurt+"";
             ArithmeticAnimation.instance.ExitText(battleArithmetic.handleData.target.GetComponentInChildren<Text>());
         }

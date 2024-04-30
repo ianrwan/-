@@ -10,4 +10,6 @@ public class SceneGlobal : MonoBehaviour
     
     // Handle the scene where to go to and set the player on correct position.
     public static TransportTag transportTag;
+
+    public TransportTag peek = transportTag;
 }
