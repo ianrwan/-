@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
 public class DialogueNameManager : MonoBehaviour
 {
     public static DialogueNameManager instance{get; private set;}
@@ -13,6 +15,7 @@ public class DialogueNameManager : MonoBehaviour
     [SerializeField] private GameObject tempPortraiPanel;
     [SerializeField] private GameObject hero;
     [SerializeField] private GameObject warrior;
+    [SerializeField] private GameObject heroHome;
     // temp
 
     public bool isNameOn;
@@ -35,6 +38,7 @@ public class DialogueNameManager : MonoBehaviour
         // temp
         hero.SetActive(false);
         warrior.SetActive(false);
+        heroHome.SetActive(false);
         tempPortraiPanel.SetActive(false);
         // temp
     }
@@ -62,20 +66,30 @@ public class DialogueNameManager : MonoBehaviour
         if(DialogueTagManager.instance.GetTagValue("speaker") == "hero")
         {
             tempPortraiPanel.SetActive(true);
-            hero.SetActive(true);
             warrior.SetActive(false);
+
+            if(SceneManager.GetActiveScene().name != "主角家")
+            {
+                hero.SetActive(true);
+            }
+            else
+            {
+                heroHome.SetActive(true);
+            }
         }
         else if(DialogueTagManager.instance.GetTagValue("speaker") == "warrior")
         {
             tempPortraiPanel.SetActive(true);
             warrior.SetActive(true);
             hero.SetActive(false);
+            heroHome.SetActive(false);
         }
         else
         {
             tempPortraiPanel.SetActive(false);
             warrior.SetActive(false);
             hero.SetActive(false);
+            heroHome.SetActive(false);
         }
         // temp
 
@@ -112,9 +126,10 @@ public class DialogueNameManager : MonoBehaviour
         namePanel.SetActive(false);
 
         // temp
-        tempPortraiPanel.SetActive(false);
         warrior.SetActive(false);
         hero.SetActive(false);
+        heroHome.SetActive(false);
+        tempPortraiPanel.SetActive(false);
         // temp
     }
 }

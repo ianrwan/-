@@ -40,6 +40,18 @@ public class DialogueTrigger : MonoBehaviour
             isPlayerCollide = false;
     }
 
+    private void OnTriggerEnter2D(Collider2D collider2D)
+    {
+        if(collider2D.gameObject.tag == "Player")
+            isPlayerCollide = true;
+    } 
+
+    private void OnTriggerExit2D(Collider2D collider2D)
+    {
+        if(collider2D.gameObject.tag == "Player")
+            isPlayerCollide = false;
+    }
+
     protected void StartDialogue()
     {
         if(knotName != null && knotName != "")
