@@ -41,7 +41,7 @@ namespace Megumin.GameSystem.Behaviour
             spriteInfo = SpriteManager.instance.GetSprite(spriteName);
             if(spriteInfo == null)
             {
-                Debug.LogWarning("spriteName isn't found");
+                Debug.LogWarning($"spriteName isn't found, spriteName:{spriteName}");
                 return;
             };
 
