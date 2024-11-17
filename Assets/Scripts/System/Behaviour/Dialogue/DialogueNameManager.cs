@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,10 +13,10 @@ public class DialogueNameManager : MonoBehaviour
     [SerializeField] private Text nameText;
 
     // temp
-    [SerializeField] private GameObject tempPortraiPanel;
-    [SerializeField] private GameObject hero;
-    [SerializeField] private GameObject warrior;
-    [SerializeField] private GameObject heroHome;
+    // [SerializeField] private GameObject tempPortraiPanel;
+    // [SerializeField] private GameObject hero;
+    // [SerializeField] private GameObject warrior;
+    // [SerializeField] private GameObject heroHome;
     // temp
 
     public bool isNameOn;
@@ -36,10 +37,10 @@ public class DialogueNameManager : MonoBehaviour
         namePanel.SetActive(false);
 
         // temp
-        hero.SetActive(false);
-        warrior.SetActive(false);
-        heroHome.SetActive(false);
-        tempPortraiPanel.SetActive(false);
+        // hero.SetActive(false);
+        // warrior.SetActive(false);
+        // heroHome.SetActive(false);
+        // tempPortraiPanel.SetActive(false);
         // temp
     }
 
@@ -63,37 +64,45 @@ public class DialogueNameManager : MonoBehaviour
         TurnOnPanel();
 
         // temp
-        if(DialogueTagManager.instance.GetTagValue("speaker") == "hero")
-        {
-            tempPortraiPanel.SetActive(true);
-            warrior.SetActive(false);
+        // if(DialogueTagManager.instance.GetTagValue("speaker") == "hero")
+        // {
+        //     tempPortraiPanel.SetActive(true);
+        //     warrior.SetActive(false);
 
-            if(SceneManager.GetActiveScene().name != "主角家")
-            {
-                hero.SetActive(true);
-            }
-            else
-            {
-                heroHome.SetActive(true);
-            }
-        }
-        else if(DialogueTagManager.instance.GetTagValue("speaker") == "warrior")
-        {
-            tempPortraiPanel.SetActive(true);
-            warrior.SetActive(true);
-            hero.SetActive(false);
-            heroHome.SetActive(false);
-        }
-        else
-        {
-            tempPortraiPanel.SetActive(false);
-            warrior.SetActive(false);
-            hero.SetActive(false);
-            heroHome.SetActive(false);
-        }
+        //     if(SceneManager.GetActiveScene().name != "主角家")
+        //     {
+        //         hero.SetActive(true);
+        //     }
+        //     else
+        //     {
+        //         heroHome.SetActive(true);
+        //     }
+        // }
+        // else if(DialogueTagManager.instance.GetTagValue("speaker") == "warrior")
+        // {
+        //     tempPortraiPanel.SetActive(true);
+        //     warrior.SetActive(true);
+        //     hero.SetActive(false);
+        //     heroHome.SetActive(false);
+        // }
+        // else
+        // {
+        //     tempPortraiPanel.SetActive(false);
+        //     warrior.SetActive(false);
+        //     hero.SetActive(false);
+        //     heroHome.SetActive(false);
+        // }
         // temp
+        Debug.Log(DialogueTagManager.instance.GetTagValue("speaker"));
 
-        nameText.text = DialogueCharacters.dialogueChatactersDictionary[DialogueTagManager.instance.GetTagValue("speaker")];
+        try
+        {
+            nameText.text = DialogueCharacters.dialogueChatactersDictionary[DialogueTagManager.instance.GetTagValue("speaker")];
+        }
+        catch(NullReferenceException)
+        {
+            StartCoroutine(UpdateNameText());
+        }
     }
 
     public void PanelSetting()
@@ -126,10 +135,16 @@ public class DialogueNameManager : MonoBehaviour
         namePanel.SetActive(false);
 
         // temp
-        warrior.SetActive(false);
-        hero.SetActive(false);
-        heroHome.SetActive(false);
-        tempPortraiPanel.SetActive(false);
+        // warrior.SetActive(false);
+        // hero.SetActive(false);
+        // heroHome.SetActive(false);
+        // tempPortraiPanel.SetActive(false);
         // temp
+    }
+
+    private IEnumerator UpdateNameText()
+    {
+        yield return new WaitUntil(() => SetUpHandleManager.instance.isCompleteSetUpOnStart);
+        nameText.text = DialogueCharacters.dialogueChatactersDictionary[DialogueTagManager.instance.GetTagValue("speaker")];
     }
 }

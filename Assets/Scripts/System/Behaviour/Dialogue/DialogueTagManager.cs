@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,14 @@ public class DialogueTagManager : MonoBehaviour
     public void SetTags()
     {
         tags = DialogueManager.currentStroy.currentTags;
+        try
+        {
+            Debug.Log(tags[0]);
+        }
+        catch(Exception e)
+        {
+            
+        }
 
         if(tags.Count == 0)
             return;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Ink.Runtime;
+using System;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -19,10 +20,19 @@ public class DialogueManager : MonoBehaviour
     [HideInInspector]
     public bool isLockedContinue;
 
+    // 將 controller 中有需要被 ContinueStory 呼叫的 method 放入 delegate
+    // input: 所要找的標籤名稱
+    public delegate void DisplayController(string tagName);
+    public static DisplayController portraitPanelController;
+
+    // 將需要在對話關閉時，其他需要一同關閉的 panel
+    // 會在 ExitDialogue 執行
+    public static Action panelTurnOff;
+
     private void Awake()
     {
         if(instance != null)
-            Debug.LogWarning("It's not allowed to set multiple DialogueManager");       
+            Debug.LogWarning("It's not allowed to set multiple DialogueManager");    
         instance = this;
 
         isDialoguePlaying = false;
@@ -42,6 +52,11 @@ public class DialogueManager : MonoBehaviour
 
         if(InputManager.instance.isSubmit)
             ContinueStory();
+    }
+
+    private void OnDestroy()
+    {
+        panelTurnOff = null;
     }
 
     public void EnterDialogue(TextAsset inkJson)
@@ -71,6 +86,7 @@ public class DialogueManager : MonoBehaviour
         isEnd = true;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
+        panelTurnOff.Invoke();
     }
 
     public void StopDialogue()
@@ -103,6 +119,7 @@ public class DialogueManager : MonoBehaviour
             DialogueTagManager.instance.SetTags();
             DialogueChoiceManager.instance.DisplayChoices();
             DialogueNameManager.instance.DisplayName();
+            portraitPanelController.Invoke("portrait-panel");
         }
         else
         {
