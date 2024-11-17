@@ -18,6 +18,8 @@ public class ChoiceSelector : MonoBehaviour
     [Header("Choices")]
     [SerializeField] private GameObject[] choices;
 
+    private bool isSelectFirst = false;
+
     private void Awake()
     {
         isChoosing = false;
@@ -58,10 +60,14 @@ public class ChoiceSelector : MonoBehaviour
         // set the toggle on the first item
         var setToggleCurrent = choicePanel.GetComponent<SetToggleCurrent>();
         setToggleCurrent.SetToggleOnCurrent(EventSystem.current.currentSelectedGameObject);
+
+        yield return new WaitForSeconds(0.1f);
+        isSelectFirst = true;
     }
 
     public void MakeChoice()
     {
+        if(!isSelectFirst) return;
         GameObject choice = EventSystem.current.currentSelectedGameObject;
         choice.GetComponent<TitleButton>().action.Invoke();
         EndChoice();
